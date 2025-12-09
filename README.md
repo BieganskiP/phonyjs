@@ -364,11 +364,38 @@ MIT © [Patryk Biegański](https://github.com/BieganskiP)
 
 ## Roadmap
 
+### ✅ Completed
+
 - [x] 63 countries with mobile & landline support
-- [x] Full TypeScript support
+- [x] Full TypeScript support with autocomplete
 - [x] Tree-shaking optimization
 - [x] International format handling
+- [x] Zero dependencies
+- [x] Comprehensive test coverage (413 tests)
+
+### 🚀 Planned Features
+
+#### Expand Coverage
+
+- [ ] Add remaining countries to achieve **global coverage** (190+ countries)
+- [ ] Region-specific validation (states, provinces)
+
+#### Enhanced Validation
+
+- [ ] **Detailed error messages** instead of boolean
+  - "Too short" / "Too long"
+  - "Invalid characters"
+  - "Invalid area code"
+  - "Invalid mobile prefix"
+  - "Invalid format"
+- [ ] Validation with error details: `{ isValid: boolean, error?: string }`
+
+#### New Utilities
+
 - [ ] Phone number formatting utilities
+- [ ] Phone number parsing (extract country code, area code, etc.)
+- [ ] Carrier/operator detection
+- [ ] Number type detection (mobile vs landline)
 
 ---
 
