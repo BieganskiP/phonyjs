@@ -382,6 +382,9 @@ MIT © [Patryk Biegański](https://github.com/BieganskiP)
 
 #### Enhanced Validation
 
+- [ ] **Support `00` international prefix** (in addition to `+`)
+  - Currently: `+44 7912 345678` ✅
+  - Planned: `0044 7912 345678` ✅
 - [ ] **Detailed error messages** instead of boolean
   - "Too short" / "Too long"
   - "Invalid characters"
