@@ -18,6 +18,18 @@ import { validateCN } from "./cn";
 import { validateKR } from "./kr";
 import { validateSG } from "./sg";
 import { validateID } from "./id";
+import { validateTR } from "./tr";
+import { validatePK } from "./pk";
+import { validateGR } from "./gr";
+import { validateSD } from "./sd";
+import { validateOM } from "./om";
+import { validateQA } from "./qa";
+import { validateKW } from "./kw";
+import { validateBH } from "./bh";
+import { validateJO } from "./jo";
+import { validateYE } from "./ye";
+import { validateLB } from "./lb";
+import { validateIQ } from "./iq";
 import { validateGeneric } from "./generic";
 
 /**
@@ -55,6 +67,18 @@ export const validators = {
   kr: validateKR,
   sg: validateSG,
   id: validateID,
+  tr: validateTR,
+  pk: validatePK,
+  gr: validateGR,
+  sd: validateSD,
+  om: validateOM,
+  qa: validateQA,
+  kw: validateKW,
+  bh: validateBH,
+  jo: validateJO,
+  ye: validateYE,
+  lb: validateLB,
+  iq: validateIQ,
 } satisfies Record<string, PhoneValidator>;
 
 /**

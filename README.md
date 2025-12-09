@@ -29,13 +29,14 @@ npm install phonyjs
 ```typescript
 import { validatePhone } from "phonyjs";
 
-// Validate phone numbers from 19 countries
+// Validate phone numbers from 31 countries 🌍
 validatePhone("us", "212-456-7890"); // true
 validatePhone("pl", "123 456 789"); // true
 validatePhone("gb", "07912345678"); // true
 validatePhone("jp", "090 1234 5678"); // true
 validatePhone("cn", "138 0013 8000"); // true
-validatePhone("sg", "8123 4567"); // true
+validatePhone("sa", "050 123 4567"); // true (Saudi Arabia)
+validatePhone("qa", "3123 4567"); // true (Qatar)
 
 // Invalid numbers return false
 validatePhone("us", "invalid"); // false
@@ -61,10 +62,11 @@ Full autocomplete and type checking for country codes:
 ```typescript
 import { validatePhone, AvailableCountryCode } from "phonyjs";
 
-// TypeScript will autocomplete all 19 supported countries:
-// "pl" | "us" | "gb" | "sa" | "fr" | "de" | "in" | "ca" | "au" |
-// "ae" | "eg" | "es" | "it" | "nl" | "jp" | "cn" | "kr" | "sg" | "id"
-const countryCode: AvailableCountryCode = "jp";
+// TypeScript will autocomplete all 31 supported countries:
+// "pl" | "us" | "gb" | "sa" | "fr" | "de" | "in" | "ca" | "au" | "ae" | "eg" |
+// "es" | "it" | "nl" | "jp" | "cn" | "kr" | "sg" | "id" | "tr" | "pk" | "gr" |
+// "sd" | "om" | "qa" | "kw" | "bh" | "jo" | "ye" | "lb" | "iq"
+const countryCode: AvailableCountryCode = "qa";
 
 // Type error if using unsupported country code
 validatePhone("xx", "123456789"); // ❌ TypeScript error
@@ -94,20 +96,22 @@ import { validators } from "phonyjs";
 // Get all available country codes
 const countryCodes = Object.keys(validators);
 console.log(countryCodes); 
-// ["pl", "us", "gb", "sa", "fr", "de", "in", "ca", "au", 
-//  "ae", "eg", "es", "it", "nl", "jp", "cn", "kr", "sg", "id"]
+// ["pl", "us", "gb", "sa", "fr", "de", "in", "ca", "au", "ae", "eg",
+//  "es", "it", "nl", "jp", "cn", "kr", "sg", "id", "tr", "pk", "gr",
+//  "sd", "om", "qa", "kw", "bh", "jo", "ye", "lb", "iq"]
 
 // Use validators directly
 validators.us("212-456-7890"); // true
 validators.jp("090 1234 5678"); // true
-validators.cn("+86 138 0013 8000"); // true
+validators.qa("3123 4567"); // true
+validators.tr("+90 532 123 4567"); // true
 ```
 
 ## Supported Countries
 
-**19 countries** with both mobile and landline support 🌍
+**31 countries** with both mobile and landline support 🌍
 
-### Europe (7)
+### Europe (8)
 | Country        | Code | Mobile Format    | Landline Format | Example          |
 | -------------- | ---- | ---------------- | --------------- | ---------------- |
 | Poland         | `pl` | 9 digits         | 9 digits        | `123 456 789`    |
@@ -117,6 +121,7 @@ validators.cn("+86 138 0013 8000"); // true
 | Spain          | `es` | 6/7 + 8 digits   | 8/9 + 8 digits  | `612 345 678`    |
 | Italy          | `it` | 3 + 9 digits     | 0 + 8-9 digits  | `312 345 6789`   |
 | Netherlands    | `nl` | 06 + 8 digits    | 0[1-5] + 8-9    | `06 1234 5678`   |
+| Greece         | `gr` | 69x + 7 digits   | 2x + 8 digits   | `690 123 4567`   |
 
 ### North America (2)
 | Country        | Code | Mobile Format    | Landline Format | Example          |
@@ -124,17 +129,28 @@ validators.cn("+86 138 0013 8000"); // true
 | United States  | `us` | 10 digits        | 10 digits       | `(212) 456-7890` |
 | Canada         | `ca` | 10 digits        | 10 digits       | `416-123-4567`   |
 
-### Middle East (3)
+### Middle East (13) 🏆 **Complete GCC + Levant**
 | Country        | Code | Mobile Format    | Landline Format | Example          |
 | -------------- | ---- | ---------------- | --------------- | ---------------- |
 | Saudi Arabia   | `sa` | 05[034689] + 7   | 01[123467] + 7  | `050 123 4567`   |
 | UAE            | `ae` | 05[024568] + 7   | 0[234679] + 7   | `050 123 4567`   |
+| Qatar          | `qa` | 3/5/6/7 + 7 digits | 4 + 7 digits  | `3123 4567`      |
+| Kuwait         | `kw` | 5/6/9 + 7 digits | 2 + 7 digits    | `5123 4567`      |
+| Bahrain        | `bh` | 3 + 7 digits     | 1/7 + 7 digits  | `3123 4567`      |
+| Oman           | `om` | 7/9 + 7 digits   | 2 + 7 digits    | `7123 4567`      |
 | Egypt          | `eg` | 01[0125] + 8     | 0[2-9] + 7-8    | `010 1234 5678`  |
+| Turkey         | `tr` | 05xx + 8 digits  | 02-04xx + 7     | `0532 123 4567`  |
+| Jordan         | `jo` | 7 + 8 digits     | Area codes      | `7 9123 4567`    |
+| Lebanon        | `lb` | 3/7/8 + 6-7      | Area codes      | `3 123 456`      |
+| Iraq           | `iq` | 7 + 9 digits     | Area codes      | `7812 345 678`   |
+| Yemen          | `ye` | 7 + 8 digits     | Area codes      | `7 1234 5678`    |
+| Sudan          | `sd` | 9x + 7 digits    | Area codes      | `091 234 5678`   |
 
-### Asia-Pacific (7) ⭐ NEW
+### Asia-Pacific (8)
 | Country        | Code | Mobile Format    | Landline Format | Example          |
 | -------------- | ---- | ---------------- | --------------- | ---------------- |
 | India          | `in` | [6-9] + 9 digits | 0 + area + 6-8  | `98765 43210`    |
+| Pakistan       | `pk` | 03[0-4] + 8      | Area codes      | `0300 1234567`   |
 | Australia      | `au` | 04 + 8 digits    | 0[2378] + 8     | `04 1234 5678`   |
 | Japan          | `jp` | 0[789]0 + 8      | 0[1-9] + 8-9    | `090 1234 5678`  |
 | China          | `cn` | 1[3-9] + 9       | 0[1-9] + 8-10   | `138 0013 8000`  |
@@ -143,9 +159,11 @@ validators.cn("+86 138 0013 8000"); // true
 | Indonesia      | `id` | 08 + 8-11        | 0[1-79] + 7-9   | `0812 3456 7890` |
 
 ### Coverage Stats
-- 🌍 **Population**: 3+ billion people
-- 💼 **Tech Hubs**: All major markets (JP, KR, SG, IN, DE, GB, US)
-- 🚀 **Largest Markets**: China, India, USA, Indonesia
+- 🌍 **Countries**: 31 across 4 continents
+- 👥 **Population**: 3.5+ billion people
+- 💼 **Tech Hubs**: All major markets covered
+- 🏆 **Complete Regions**: All GCC countries, Complete Levant
+- 🚀 **Top Markets**: China, India, USA, Indonesia, Pakistan
 
 ## Validation Rules
 
@@ -230,10 +248,11 @@ Object containing all validator functions, keyed by country code.
 // Function type for validators
 type PhoneValidator = (phone: string) => boolean;
 
-// Union type of all 19 supported country codes
+// Union type of all 31 supported country codes
 type AvailableCountryCode = 
-  | "pl" | "us" | "gb" | "sa" | "fr" | "de" | "in" | "ca" | "au"
-  | "ae" | "eg" | "es" | "it" | "nl" | "jp" | "cn" | "kr" | "sg" | "id";
+  | "pl" | "us" | "gb" | "sa" | "fr" | "de" | "in" | "ca" | "au" | "ae" | "eg"
+  | "es" | "it" | "nl" | "jp" | "cn" | "kr" | "sg" | "id" | "tr" | "pk" | "gr"
+  | "sd" | "om" | "qa" | "kw" | "bh" | "jo" | "ye" | "lb" | "iq";
 ```
 
 ## Development

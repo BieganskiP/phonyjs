@@ -5,9 +5,70 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2025-12-09
+
+### Added - Phase 2: Gulf States + MENA 🔥🔥
+
+- 🇶🇦 **Qatar (QA)** - Mobile and landline validation (3/5/6/7 for mobile, 4 for landline)
+- 🇰🇼 **Kuwait (KW)** - Mobile and landline validation (5/6/9 for mobile, 2 for landline)
+- 🇧🇭 **Bahrain (BH)** - Mobile and landline validation (3 for mobile, 1/7 for landline)
+- 🇯🇴 **Jordan (JO)** - Mobile and landline validation (7 for mobile, area codes for landline)
+- 🇾🇪 **Yemen (YE)** - Mobile and landline validation (7 for mobile, area codes for landline)
+- 🇱🇧 **Lebanon (LB)** - Mobile and landline validation (3/7/8 for mobile, area codes for landline)
+- 🇮🇶 **Iraq (IQ)** - Mobile and landline validation (7 for mobile, area codes for landline)
+
+### Improvements
+
+- Expanded test suite to 222 tests (from 180)
+- Added 42 new comprehensive tests for Phase 2 countries
+- Complete Gulf Cooperation Council + Levant coverage
+
+### Countries Summary
+
+**Total supported countries: 31** 🚀🌍
+
+**By Region:**
+
+- **Europe (8)**: 🇵🇱 PL, 🇬🇧 GB, 🇫🇷 FR, 🇩🇪 DE, 🇪🇸 ES, 🇮🇹 IT, 🇳🇱 NL, 🇬🇷 GR
+- **North America (2)**: 🇺🇸 US, 🇨🇦 CA
+- **Middle East (13)**: 🇸🇦 SA, 🇦🇪 AE, 🇪🇬 EG, 🇹🇷 TR, 🇴🇲 OM, 🇸🇩 SD, 🇶🇦 QA ⭐, 🇰🇼 KW ⭐, 🇧🇭 BH ⭐, 🇯🇴 JO ⭐, 🇾🇪 YE ⭐, 🇱🇧 LB ⭐, 🇮🇶 IQ ⭐
+- **Asia-Pacific (8)**: 🇮🇳 IN, 🇦🇺 AU, 🇯🇵 JP, 🇨🇳 CN, 🇰🇷 KR, 🇸🇬 SG, 🇮🇩 ID, 🇵🇰 PK
+
+**Regional Achievement**: Complete Middle East coverage including all GCC countries and Levant! 🏆
+
+## [1.4.0] - 2025-12-09
+
+### Added - Batch A: Critical Work Requirements 🔥
+
+- 🇹🇷 **Turkey (TR)** - Mobile and landline validation (05xx for mobile, 02-04xx for landline)
+- 🇵🇰 **Pakistan (PK)** - Mobile and landline validation (03xx for mobile, area codes for landline)
+- 🇬🇷 **Greece (GR)** - Mobile and landline validation (69x for mobile, 2x for landline)
+- 🇸🇩 **Sudan (SD)** - Mobile and landline validation (9x for mobile, area codes for landline)
+- 🇴🇲 **Oman (OM)** - Mobile and landline validation (7/9 for mobile, 2 for landline)
+
+### Improvements
+
+- Expanded test suite to 180 tests (from 150)
+- Added 30 new comprehensive tests for Phase 1 countries
+- Enhanced work-specific coverage by 28 data points
+
+### Countries Summary
+
+**Total supported countries: 24** 🚀🌍
+
+**By Region:**
+
+- **Europe (8)**: 🇵🇱 PL, 🇬🇧 GB, 🇫🇷 FR, 🇩🇪 DE, 🇪🇸 ES, 🇮🇹 IT, 🇳🇱 NL, 🇬🇷 GR ⭐
+- **North America (2)**: 🇺🇸 US, 🇨🇦 CA
+- **Middle East (6)**: 🇸🇦 SA, 🇦🇪 AE, 🇪🇬 EG, 🇹🇷 TR ⭐, 🇴🇲 OM ⭐, 🇸🇩 SD ⭐
+- **Asia-Pacific (8)**: 🇮🇳 IN, 🇦🇺 AU, 🇯🇵 JP, 🇨🇳 CN, 🇰🇷 KR, 🇸🇬 SG, 🇮🇩 ID, 🇵🇰 PK ⭐
+
+**Work Coverage**: Addresses most critical work requirements (+28 data points)
+
 ## [1.3.1] - 2025-12-09
 
 ### Changed
+
 - Added support link (Buy Me a Coffee) to README and documentation
 - Updated README header with support badge
 - Added dedicated Support section to README
@@ -15,6 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] - 2025-12-09
 
 ### Added - Major Asian Markets 🌏
+
 - 🇯🇵 **Japan (JP)** - Mobile and landline validation (070/080/090 for mobile, area codes for landline)
 - 🇨🇳 **China (CN)** - Mobile and landline validation (13x-19x for mobile, area codes for landline)
 - 🇰🇷 **South Korea (KR)** - Mobile and landline validation (010 for mobile, area codes for landline)
@@ -22,20 +84,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🇮🇩 **Indonesia (ID)** - Mobile and landline validation (08x for mobile, area codes for landline)
 
 ### Improvements
+
 - Expanded test suite to 150 tests (from 120)
 - Added comprehensive tests for all Asian markets
 - Enhanced global coverage significantly
 
 ### Countries Summary
+
 **Total supported countries: 19** 🚀🌍
 
 **By Region:**
+
 - **Europe (7)**: 🇵🇱 PL, 🇬🇧 GB, 🇫🇷 FR, 🇩🇪 DE, 🇪🇸 ES, 🇮🇹 IT, 🇳🇱 NL
 - **North America (2)**: 🇺🇸 US, 🇨🇦 CA
 - **Middle East (3)**: 🇸🇦 SA, 🇦🇪 AE, 🇪🇬 EG
 - **Asia-Pacific (7)**: 🇮🇳 IN, 🇦🇺 AU, 🇯🇵 JP ⭐, 🇨🇳 CN ⭐, 🇰🇷 KR ⭐, 🇸🇬 SG ⭐, 🇮🇩 ID ⭐
 
 **Market Coverage:**
+
 - **Population covered**: 3+ billion people
 - **Major tech hubs**: All covered (JP, KR, SG, IN, DE, GB, US)
 - **Largest markets**: China, India, USA, Indonesia
@@ -43,6 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0] - 2025-12-09
 
 ### Added - New Countries 🌍
+
 - 🇦🇪 **UAE (AE)** - Mobile and landline validation
 - 🇪🇬 **Egypt (EG)** - Mobile and landline validation
 - 🇪🇸 **Spain (ES)** - Mobile and landline validation
@@ -50,6 +117,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🇳🇱 **Netherlands (NL)** - Mobile and landline validation
 
 ### Improvements - Landline Support 📞
+
 - **All validators now support both mobile AND landline numbers!**
 - 🇵🇱 Poland: Added landline support (area codes 1-3)
 - 🇬🇧 UK: Added landline support (01, 02, 03 area codes)
@@ -64,13 +132,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🇳🇱 Netherlands: Added landline support (01-05 area codes)
 
 ### Testing
+
 - Expanded test suite to 120 tests (from 82)
 - Added comprehensive tests for both mobile and landline numbers
 - Enhanced Middle East coverage
 - Enhanced European coverage
 
 ### Countries Summary
+
 **Total supported countries: 14** 🚀
+
 - **Europe (7)**: 🇵🇱 Poland, 🇬🇧 UK, 🇫🇷 France, 🇩🇪 Germany, 🇪🇸 Spain, 🇮🇹 Italy, 🇳🇱 Netherlands
 - **North America (2)**: 🇺🇸 USA, 🇨🇦 Canada
 - **Middle East (3)**: 🇸🇦 Saudi Arabia, 🇦🇪 UAE, 🇪🇬 Egypt
@@ -144,6 +215,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Node.js**: >=16 required
 - **Package Exports**: Properly configured for types, import, require
 
+[1.5.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.5.0
+[1.4.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.4.0
 [1.3.1]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.3.1
 [1.3.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.3.0
 [1.2.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.2.0

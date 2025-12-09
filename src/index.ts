@@ -35,4 +35,16 @@ export { validateCN } from "./validators/cn";
 export { validateKR } from "./validators/kr";
 export { validateSG } from "./validators/sg";
 export { validateID } from "./validators/id";
+export { validateTR } from "./validators/tr";
+export { validatePK } from "./validators/pk";
+export { validateGR } from "./validators/gr";
+export { validateSD } from "./validators/sd";
+export { validateOM } from "./validators/om";
+export { validateQA } from "./validators/qa";
+export { validateKW } from "./validators/kw";
+export { validateBH } from "./validators/bh";
+export { validateJO } from "./validators/jo";
+export { validateYE } from "./validators/ye";
+export { validateLB } from "./validators/lb";
+export { validateIQ } from "./validators/iq";
 
