@@ -369,8 +369,6 @@ MIT © [Patryk Biegański](https://github.com/BieganskiP)
 - [x] Tree-shaking optimization
 - [x] International format handling
 - [ ] Phone number formatting utilities
-- [ ] Phone number parsing
-- [ ] Region/carrier detection
 
 ---
 
