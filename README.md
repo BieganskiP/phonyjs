@@ -5,6 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NPM Package](https://img.shields.io/npm/v/phonyjs.svg)](https://www.npmjs.com/package/phonyjs)
+[![Buy Me A Coffee](https://img.shields.io/badge/☕_Support-Buy_Me_A_Coffee-orange.svg)](https://buycoffee.to/pbieganski)
 
 **Created by [Patryk Biegański](https://github.com/BieganskiP)** | [GitHub](https://github.com/BieganskiP/phonyjs) | [NPM](https://www.npmjs.com/package/phonyjs) | [LinkedIn](https://www.linkedin.com/in/patrykbieganski)
 
@@ -28,10 +29,13 @@ npm install phonyjs
 ```typescript
 import { validatePhone } from "phonyjs";
 
-// Validate a phone number
+// Validate phone numbers from 19 countries
 validatePhone("us", "212-456-7890"); // true
 validatePhone("pl", "123 456 789"); // true
 validatePhone("gb", "07912345678"); // true
+validatePhone("jp", "090 1234 5678"); // true
+validatePhone("cn", "138 0013 8000"); // true
+validatePhone("sg", "8123 4567"); // true
 
 // Invalid numbers return false
 validatePhone("us", "invalid"); // false
@@ -57,8 +61,10 @@ Full autocomplete and type checking for country codes:
 ```typescript
 import { validatePhone, AvailableCountryCode } from "phonyjs";
 
-// TypeScript will autocomplete: "pl" | "us" | "gb"
-const countryCode: AvailableCountryCode = "us";
+// TypeScript will autocomplete all 19 supported countries:
+// "pl" | "us" | "gb" | "sa" | "fr" | "de" | "in" | "ca" | "au" |
+// "ae" | "eg" | "es" | "it" | "nl" | "jp" | "cn" | "kr" | "sg" | "id"
+const countryCode: AvailableCountryCode = "jp";
 
 // Type error if using unsupported country code
 validatePhone("xx", "123456789"); // ❌ TypeScript error
@@ -69,10 +75,13 @@ validatePhone("xx", "123456789"); // ❌ TypeScript error
 Import only the validators you need for optimal bundle size:
 
 ```typescript
-import { validatePL, validateUS } from "phonyjs";
+// Import only what you need - great for bundle size!
+import { validatePL, validateUS, validateJP, validateCN } from "phonyjs";
 
 validatePL("123 456 789"); // true
 validateUS("212-456-7890"); // true
+validateJP("090 1234 5678"); // true
+validateCN("138 0013 8000"); // true
 ```
 
 ### Access Validator Registry
@@ -84,19 +93,59 @@ import { validators } from "phonyjs";
 
 // Get all available country codes
 const countryCodes = Object.keys(validators);
-console.log(countryCodes); // ["pl", "us", "gb"]
+console.log(countryCodes); 
+// ["pl", "us", "gb", "sa", "fr", "de", "in", "ca", "au", 
+//  "ae", "eg", "es", "it", "nl", "jp", "cn", "kr", "sg", "id"]
 
 // Use validators directly
 validators.us("212-456-7890"); // true
+validators.jp("090 1234 5678"); // true
+validators.cn("+86 138 0013 8000"); // true
 ```
 
 ## Supported Countries
 
-| Country        | Code | Format             | Example          |
-| -------------- | ---- | ------------------ | ---------------- |
-| Poland         | `pl` | 9 digits           | `123 456 789`    |
-| United States  | `us` | 10 digits          | `(212) 456-7890` |
-| United Kingdom | `gb` | 11 digits (mobile) | `07912 345678`   |
+**19 countries** with both mobile and landline support 🌍
+
+### Europe (7)
+| Country        | Code | Mobile Format    | Landline Format | Example          |
+| -------------- | ---- | ---------------- | --------------- | ---------------- |
+| Poland         | `pl` | 9 digits         | 9 digits        | `123 456 789`    |
+| United Kingdom | `gb` | 07[1-9] + 8 digits | 01/02 + 9 digits | `07912 345678`   |
+| France         | `fr` | 06/07 + 8 digits | 01-05 + 8 digits | `06 12 34 56 78` |
+| Germany        | `de` | 015/016/017 + 7-9 | 0[2-9] + 8-10   | `0151 12345678`  |
+| Spain          | `es` | 6/7 + 8 digits   | 8/9 + 8 digits  | `612 345 678`    |
+| Italy          | `it` | 3 + 9 digits     | 0 + 8-9 digits  | `312 345 6789`   |
+| Netherlands    | `nl` | 06 + 8 digits    | 0[1-5] + 8-9    | `06 1234 5678`   |
+
+### North America (2)
+| Country        | Code | Mobile Format    | Landline Format | Example          |
+| -------------- | ---- | ---------------- | --------------- | ---------------- |
+| United States  | `us` | 10 digits        | 10 digits       | `(212) 456-7890` |
+| Canada         | `ca` | 10 digits        | 10 digits       | `416-123-4567`   |
+
+### Middle East (3)
+| Country        | Code | Mobile Format    | Landline Format | Example          |
+| -------------- | ---- | ---------------- | --------------- | ---------------- |
+| Saudi Arabia   | `sa` | 05[034689] + 7   | 01[123467] + 7  | `050 123 4567`   |
+| UAE            | `ae` | 05[024568] + 7   | 0[234679] + 7   | `050 123 4567`   |
+| Egypt          | `eg` | 01[0125] + 8     | 0[2-9] + 7-8    | `010 1234 5678`  |
+
+### Asia-Pacific (7) ⭐ NEW
+| Country        | Code | Mobile Format    | Landline Format | Example          |
+| -------------- | ---- | ---------------- | --------------- | ---------------- |
+| India          | `in` | [6-9] + 9 digits | 0 + area + 6-8  | `98765 43210`    |
+| Australia      | `au` | 04 + 8 digits    | 0[2378] + 8     | `04 1234 5678`   |
+| Japan          | `jp` | 0[789]0 + 8      | 0[1-9] + 8-9    | `090 1234 5678`  |
+| China          | `cn` | 1[3-9] + 9       | 0[1-9] + 8-10   | `138 0013 8000`  |
+| South Korea    | `kr` | 010 + 7-8        | 0[2-9] + 6-9    | `010 1234 5678`  |
+| Singapore      | `sg` | 8/9 + 7 digits   | 6 + 7 digits    | `8123 4567`      |
+| Indonesia      | `id` | 08 + 8-11        | 0[1-79] + 7-9   | `0812 3456 7890` |
+
+### Coverage Stats
+- 🌍 **Population**: 3+ billion people
+- 💼 **Tech Hubs**: All major markets (JP, KR, SG, IN, DE, GB, US)
+- 🚀 **Largest Markets**: China, India, USA, Indonesia
 
 ## Validation Rules
 
@@ -181,8 +230,10 @@ Object containing all validator functions, keyed by country code.
 // Function type for validators
 type PhoneValidator = (phone: string) => boolean;
 
-// Union type of all supported country codes
-type AvailableCountryCode = "pl" | "us" | "gb";
+// Union type of all 19 supported country codes
+type AvailableCountryCode = 
+  | "pl" | "us" | "gb" | "sa" | "fr" | "de" | "in" | "ca" | "au"
+  | "ae" | "eg" | "es" | "it" | "nl" | "jp" | "cn" | "kr" | "sg" | "id";
 ```
 
 ## Development
@@ -257,6 +308,20 @@ Please ensure all tests pass before submitting a PR.
 - LinkedIn: [in/patrykbieganski](https://www.linkedin.com/in/patrykbieganski)
 
 Fullstack Developer specializing in JavaScript/TypeScript, ReactJS, NodeJS, NestJS, MongoDB, and MySQL.
+
+## Support
+
+If you find PhonyJS useful, consider supporting the project! ☕
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://buycoffee.to/pbieganski)
+
+Your support helps maintain and improve PhonyJS:
+- 🌍 Adding more countries
+- 🐛 Bug fixes and improvements
+- 📚 Better documentation
+- ✨ New features
+
+[**☕ Buy me a coffee**](https://buycoffee.to/pbieganski) to keep this project growing!
 
 ## License
 

@@ -35,10 +35,13 @@ describe("validatePL - Polish phone numbers", () => {
     expect(validatePL("a00123456")).toBe(false);
   });
 
+  test("should accept Polish landline numbers", () => {
+    expect(validatePL("123456789")).toBe(true); // landline with area code 12
+    expect(validatePL("223456789")).toBe(true); // landline with area code 22
+    expect(validatePL("323456789")).toBe(true); // landline with area code 32
+  });
+
   test("should reject numbers starting with invalid digits", () => {
-    expect(validatePL("123456789")).toBe(false); // starts with 1 (landline)
-    expect(validatePL("223456789")).toBe(false); // starts with 2 (landline)
-    expect(validatePL("323456789")).toBe(false); // starts with 3 (landline)
     expect(validatePL("923456789")).toBe(false); // starts with 9 (special services)
     expect(validatePL("023456789")).toBe(false); // starts with 0
   });

@@ -1,32 +1,31 @@
 import { PhoneValidator } from "../types";
 
 /**
- * Validates German phone numbers.
+ * Validates German phone numbers (mobile and landline).
  * 
  * Rules:
- * - Mobile numbers: 10-11 digits starting with 15, 16, or 17
- * - Must start with 015, 016, or 017
+ * - Mobile numbers: 10-11 digits starting with 015, 016, or 017
+ * - Landline numbers: Variable length (5-14 digits) with area codes
  * - Non-digit characters are stripped before validation
  * - Handles international format (+49 prefix)
  * 
- * Note: This validator focuses on mobile numbers only.
- * German landlines have variable length area codes (2-5 digits) which are complex to validate.
- * 
  * @example
  * validateDE("0151 12345678") // true (mobile)
- * validateDE("0170 1234567") // true (mobile)
- * validateDE("+49 151 12345678") // true (international)
- * validateDE("0162 12345678") // true (mobile)
+ * validateDE("030 12345678") // true (landline - Berlin)
+ * validateDE("089 123456") // true (landline - Munich)
+ * validateDE("+49 151 12345678") // true (international mobile)
+ * validateDE("+49 30 12345678") // true (international landline)
  */
 export const validateDE: PhoneValidator = (phone) => {
   let digits = phone.replace(/\D/g, "");
   
   // Remove country code if present (+49)
-  if (digits.startsWith("49") && digits.length > 10) {
+  if (digits.startsWith("49") && digits.length > 5) {
     digits = "0" + digits.slice(2);
   }
   
-  // Mobile numbers: 01[567]X (10-11 digits total)
-  return /^01[567]\d{7,9}$/.test(digits);
+  // Mobile: 01[567] + 7-9 digits (10-11 total)
+  // Landline: 0[2-9] + variable length (5-14 digits total)
+  return /^(01[567]\d{7,9}|0[2-9]\d{3,12})$/.test(digits);
 };
 

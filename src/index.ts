@@ -25,4 +25,14 @@ export { validateDE } from "./validators/de";
 export { validateIN } from "./validators/in";
 export { validateCA } from "./validators/ca";
 export { validateAU } from "./validators/au";
+export { validateAE } from "./validators/ae";
+export { validateEG } from "./validators/eg";
+export { validateES } from "./validators/es";
+export { validateIT } from "./validators/it";
+export { validateNL } from "./validators/nl";
+export { validateJP } from "./validators/jp";
+export { validateCN } from "./validators/cn";
+export { validateKR } from "./validators/kr";
+export { validateSG } from "./validators/sg";
+export { validateID } from "./validators/id";
 

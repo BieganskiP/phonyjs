@@ -16,11 +16,15 @@ describe("validateGB - UK mobile phone numbers", () => {
     expect(validateGB("+44 7123 456789")).toBe(true);
   });
 
-  test("should reject phone numbers not starting with 07", () => {
-    expect(validateGB("08123456789")).toBe(false);
-    expect(validateGB("06123456789")).toBe(false);
-    expect(validateGB("01123456789")).toBe(false);
-    expect(validateGB("02012345678")).toBe(false); // London landline
+  test("should accept UK landline numbers", () => {
+    expect(validateGB("01123456789")).toBe(true); // Manchester
+    expect(validateGB("02012345678")).toBe(true); // London
+    expect(validateGB("03001234567")).toBe(true); // Non-geographic
+  });
+
+  test("should reject invalid UK numbers", () => {
+    expect(validateGB("08123456789")).toBe(false); // Invalid prefix
+    expect(validateGB("06123456789")).toBe(false); // Invalid prefix
   });
 
   test("should reject phone numbers with incorrect length", () => {

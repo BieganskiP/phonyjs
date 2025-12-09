@@ -21,12 +21,13 @@ describe("validateIN - Indian phone numbers", () => {
     expect(validateIN("91 9876543210")).toBe(true);
   });
 
-  test("should reject phone numbers with incorrect prefix", () => {
-    expect(validateIN("5123456789")).toBe(false); // starts with 5
-    expect(validateIN("4123456789")).toBe(false); // starts with 4
-    expect(validateIN("3123456789")).toBe(false); // starts with 3
-    expect(validateIN("2123456789")).toBe(false); // starts with 2
-    expect(validateIN("1123456789")).toBe(false); // starts with 1
+  test("should accept Indian landline numbers", () => {
+    expect(validateIN("1123456789")).toBe(true); // landline (Delhi - area code 11)
+    expect(validateIN("2212345678")).toBe(true); // landline (Mumbai - area code 22)
+    expect(validateIN("3312345678")).toBe(true); // landline (Kolkata - area code 33)
+  });
+
+  test("should reject phone numbers with incorrect format", () => {
     expect(validateIN("0123456789")).toBe(false); // starts with 0
   });
 

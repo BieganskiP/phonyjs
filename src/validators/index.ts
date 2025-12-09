@@ -8,6 +8,16 @@ import { validateDE } from "./de";
 import { validateIN } from "./in";
 import { validateCA } from "./ca";
 import { validateAU } from "./au";
+import { validateAE } from "./ae";
+import { validateEG } from "./eg";
+import { validateES } from "./es";
+import { validateIT } from "./it";
+import { validateNL } from "./nl";
+import { validateJP } from "./jp";
+import { validateCN } from "./cn";
+import { validateKR } from "./kr";
+import { validateSG } from "./sg";
+import { validateID } from "./id";
 import { validateGeneric } from "./generic";
 
 /**
@@ -35,6 +45,16 @@ export const validators = {
   in: validateIN,
   ca: validateCA,
   au: validateAU,
+  ae: validateAE,
+  eg: validateEG,
+  es: validateES,
+  it: validateIT,
+  nl: validateNL,
+  jp: validateJP,
+  cn: validateCN,
+  kr: validateKR,
+  sg: validateSG,
+  id: validateID,
 } satisfies Record<string, PhoneValidator>;
 
 /**

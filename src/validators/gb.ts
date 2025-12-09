@@ -1,34 +1,31 @@
 import { PhoneValidator } from "../types";
 
 /**
- * Validates UK mobile phone numbers.
+ * Validates UK phone numbers (mobile and landline).
  *
  * Rules:
- * - Must start with 07, followed by 1-9 (not 0)
- * - Valid patterns: 071, 072, 073, 074, 075, 076, 077, 078, 079
+ * - Mobile: Start with 07, followed by 1-9 (not 0), 11 digits total
+ * - Landline: Start with 01, 02, or 03, 10-11 digits total
  * - 070 is NOT standard mobile (personal numbers)
- * - Must be 11 digits total (or 12-13 with country code)
  * - Non-digit characters are stripped before validation
  * - Handles international format (+44 prefix)
  *
- * Note: This validates UK mobile numbers only, not landlines.
- *
  * @example
- * validateGB("07123 456789") // true
- * validateGB("07912345678") // true
- * validateGB("+44 7912 345678") // true
- * validateGB("07012345678") // false (070 is personal numbers, not mobile)
- * validateGB("08123456789") // false (doesn't start with 07)
+ * validateGB("07123 456789") // true (mobile)
+ * validateGB("0201234567") // true (landline - London)
+ * validateGB("01612345678") // true (landline - Manchester)
+ * validateGB("+44 20 1234 5678") // true (international landline)
+ * validateGB("07012345678") // false (070 is personal numbers)
  */
 export const validateGB: PhoneValidator = (phone) => {
   let digits = phone.replace(/\D/g, "");
 
   // Remove country code if present (+44)
-  // UK mobile in international format: +44 7xxx instead of 07xxx
-  if (digits.startsWith("44") && digits.length > 11) {
+  if (digits.startsWith("44") && digits.length > 10) {
     digits = "0" + digits.slice(2);
   }
 
-  // Must start with 07, followed by 1-9 (not 0), then 9 more digits
-  return /^07[1-9]\d{8}$/.test(digits);
+  // Mobile: 07[1-9] + 8 digits (11 total)
+  // Landline: 01/02/03 + 8-9 digits (10-11 total)
+  return /^(07[1-9]\d{8}|0[123]\d{8,9})$/.test(digits);
 };

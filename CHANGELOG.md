@@ -5,6 +5,77 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2025-12-09
+
+### Changed
+- Added support link (Buy Me a Coffee) to README and documentation
+- Updated README header with support badge
+- Added dedicated Support section to README
+
+## [1.3.0] - 2025-12-09
+
+### Added - Major Asian Markets 🌏
+- 🇯🇵 **Japan (JP)** - Mobile and landline validation (070/080/090 for mobile, area codes for landline)
+- 🇨🇳 **China (CN)** - Mobile and landline validation (13x-19x for mobile, area codes for landline)
+- 🇰🇷 **South Korea (KR)** - Mobile and landline validation (010 for mobile, area codes for landline)
+- 🇸🇬 **Singapore (SG)** - Mobile and landline validation (8/9 for mobile, 6 for landline)
+- 🇮🇩 **Indonesia (ID)** - Mobile and landline validation (08x for mobile, area codes for landline)
+
+### Improvements
+- Expanded test suite to 150 tests (from 120)
+- Added comprehensive tests for all Asian markets
+- Enhanced global coverage significantly
+
+### Countries Summary
+**Total supported countries: 19** 🚀🌍
+
+**By Region:**
+- **Europe (7)**: 🇵🇱 PL, 🇬🇧 GB, 🇫🇷 FR, 🇩🇪 DE, 🇪🇸 ES, 🇮🇹 IT, 🇳🇱 NL
+- **North America (2)**: 🇺🇸 US, 🇨🇦 CA
+- **Middle East (3)**: 🇸🇦 SA, 🇦🇪 AE, 🇪🇬 EG
+- **Asia-Pacific (7)**: 🇮🇳 IN, 🇦🇺 AU, 🇯🇵 JP ⭐, 🇨🇳 CN ⭐, 🇰🇷 KR ⭐, 🇸🇬 SG ⭐, 🇮🇩 ID ⭐
+
+**Market Coverage:**
+- **Population covered**: 3+ billion people
+- **Major tech hubs**: All covered (JP, KR, SG, IN, DE, GB, US)
+- **Largest markets**: China, India, USA, Indonesia
+
+## [1.2.0] - 2025-12-09
+
+### Added - New Countries 🌍
+- 🇦🇪 **UAE (AE)** - Mobile and landline validation
+- 🇪🇬 **Egypt (EG)** - Mobile and landline validation
+- 🇪🇸 **Spain (ES)** - Mobile and landline validation
+- 🇮🇹 **Italy (IT)** - Mobile and landline validation
+- 🇳🇱 **Netherlands (NL)** - Mobile and landline validation
+
+### Improvements - Landline Support 📞
+- **All validators now support both mobile AND landline numbers!**
+- 🇵🇱 Poland: Added landline support (area codes 1-3)
+- 🇬🇧 UK: Added landline support (01, 02, 03 area codes)
+- 🇩🇪 Germany: Added landline support (variable length area codes)
+- 🇮🇳 India: Added landline support (area codes for major cities)
+- 🇦🇺 Australia: Added landline support (02, 03, 07, 08 area codes)
+- 🇸🇦 Saudi Arabia: Added landline support (011-017 area codes)
+- 🇦🇪 UAE: Added landline support (2-9 area codes)
+- 🇪🇬 Egypt: Added landline support (02-09 area codes)
+- 🇪🇸 Spain: Added landline support (8-9 prefixes)
+- 🇮🇹 Italy: Added landline support (0x area codes)
+- 🇳🇱 Netherlands: Added landline support (01-05 area codes)
+
+### Testing
+- Expanded test suite to 120 tests (from 82)
+- Added comprehensive tests for both mobile and landline numbers
+- Enhanced Middle East coverage
+- Enhanced European coverage
+
+### Countries Summary
+**Total supported countries: 14** 🚀
+- **Europe (7)**: 🇵🇱 Poland, 🇬🇧 UK, 🇫🇷 France, 🇩🇪 Germany, 🇪🇸 Spain, 🇮🇹 Italy, 🇳🇱 Netherlands
+- **North America (2)**: 🇺🇸 USA, 🇨🇦 Canada
+- **Middle East (3)**: 🇸🇦 Saudi Arabia, 🇦🇪 UAE, 🇪🇬 Egypt
+- **Asia-Pacific (2)**: 🇮🇳 India, 🇦🇺 Australia
+
 ## [1.1.0] - 2025-12-09
 
 ### Added - New Countries 🆕
@@ -73,5 +144,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Node.js**: >=16 required
 - **Package Exports**: Properly configured for types, import, require
 
+[1.3.1]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.3.1
+[1.3.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.3.0
+[1.2.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.2.0
 [1.1.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.1.0
 [1.0.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.0.0

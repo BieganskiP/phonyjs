@@ -21,10 +21,14 @@ describe("validateAU - Australian phone numbers", () => {
     expect(validateAU("61 4 1234 5678")).toBe(true);
   });
 
-  test("should reject phone numbers not starting with 04", () => {
-    expect(validateAU("0512345678")).toBe(false); // starts with 05
-    expect(validateAU("0312345678")).toBe(false); // starts with 03 (landline)
-    expect(validateAU("0212345678")).toBe(false); // starts with 02 (landline)
+  test("should accept Australian landline numbers", () => {
+    expect(validateAU("0312345678")).toBe(true); // landline (Melbourne)
+    expect(validateAU("0212345678")).toBe(true); // landline (Sydney)
+    expect(validateAU("0712345678")).toBe(true); // landline (Brisbane)
+  });
+
+  test("should reject invalid Australian numbers", () => {
+    expect(validateAU("0512345678")).toBe(false); // invalid prefix
     expect(validateAU("4123456789")).toBe(false); // missing leading 0
   });
 

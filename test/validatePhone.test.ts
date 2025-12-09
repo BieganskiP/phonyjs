@@ -4,10 +4,11 @@ import { validatePhone } from "../src";
 describe("validatePhone - main function", () => {
   describe("Polish (pl) validation", () => {
     test("should validate Polish phone numbers", () => {
-      expect(validatePhone("pl", "500 123 456")).toBe(true);
-      expect(validatePhone("pl", "600123456")).toBe(true);
-      expect(validatePhone("pl", "700123456")).toBe(true);
-      expect(validatePhone("pl", "123456789")).toBe(false); // invalid prefix
+      expect(validatePhone("pl", "500 123 456")).toBe(true); // mobile
+      expect(validatePhone("pl", "600123456")).toBe(true); // mobile
+      expect(validatePhone("pl", "123456789")).toBe(true); // landline
+      expect(validatePhone("pl", "223456789")).toBe(true); // landline
+      expect(validatePhone("pl", "923456789")).toBe(false); // invalid (special services)
       expect(validatePhone("pl", "123")).toBe(false); // too short
     });
   });

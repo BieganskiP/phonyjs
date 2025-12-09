@@ -5,8 +5,8 @@ describe("validatePhoneWithFallback", () => {
   describe("with specific validators", () => {
     test("should use specific validator when available", () => {
       // Poland - specific validator
-      expect(validatePhoneWithFallback("pl", "500123456")).toBe(true);
-      expect(validatePhoneWithFallback("pl", "123456789")).toBe(false); // invalid prefix
+      expect(validatePhoneWithFallback("pl", "500123456")).toBe(true); // mobile
+      expect(validatePhoneWithFallback("pl", "123456789")).toBe(true); // landline
 
       // US - specific validator
       expect(validatePhoneWithFallback("us", "212-456-7890")).toBe(true);
@@ -24,29 +24,29 @@ describe("validatePhoneWithFallback", () => {
 
   describe("with generic fallback", () => {
     test("should use generic validator for unsupported countries", () => {
-      // Japan (no specific validator)
-      expect(validatePhoneWithFallback("jp", "09012345678")).toBe(true); // 11 digits, valid
-      expect(validatePhoneWithFallback("jp", "123")).toBe(false); // too short
+      // Brazil (no specific validator yet)
+      expect(validatePhoneWithFallback("br", "11987654321")).toBe(true); // 11 digits, valid
+      expect(validatePhoneWithFallback("br", "123")).toBe(false); // too short
       
-      // Italy (no specific validator)
-      expect(validatePhoneWithFallback("it", "3123456789")).toBe(true); // 10 digits, valid
-      expect(validatePhoneWithFallback("it", "12345")).toBe(false); // too short
+      // Mexico (no specific validator yet)
+      expect(validatePhoneWithFallback("mx", "5512345678")).toBe(true); // 10 digits, valid
+      expect(validatePhoneWithFallback("mx", "12345")).toBe(false); // too short
       
-      // Spain (no specific validator)
-      expect(validatePhoneWithFallback("es", "612345678")).toBe(true); // 9 digits, valid
+      // Portugal (no specific validator yet)
+      expect(validatePhoneWithFallback("pt", "912345678")).toBe(true); // 9 digits, valid
     });
   });
 
   describe("strict mode", () => {
     test("should reject unsupported countries in strict mode", () => {
-      // Japan (no specific validator)
+      // Brazil (no specific validator yet)
       expect(
-        validatePhoneWithFallback("jp", "09012345678", { strict: true })
+        validatePhoneWithFallback("br", "11987654321", { strict: true })
       ).toBe(false);
 
-      // Italy (no specific validator)
+      // Mexico (no specific validator yet)
       expect(
-        validatePhoneWithFallback("it", "3123456789", { strict: true })
+        validatePhoneWithFallback("mx", "5512345678", { strict: true })
       ).toBe(false);
 
       // But should still validate supported countries
@@ -61,6 +61,12 @@ describe("validatePhoneWithFallback", () => {
       ).toBe(true);
       expect(
         validatePhoneWithFallback("de", "015112345678", { strict: true })
+      ).toBe(true);
+      expect(
+        validatePhoneWithFallback("it", "3201234567", { strict: true })
+      ).toBe(true);
+      expect(
+        validatePhoneWithFallback("es", "612345678", { strict: true })
       ).toBe(true);
     });
   });
