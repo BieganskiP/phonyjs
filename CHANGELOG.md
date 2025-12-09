@@ -26,15 +26,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Milestone Achievement
 - **63 countries** now supported (+2 from v1.6.3)
 - **100% work project requirements met!**
+- **24 European countries**
 - **18 Asia-Pacific countries**
-- **23 European countries**
 - **13 Middle Eastern countries**
 - **6 African countries**
 - **2 North American countries**
-- **1 South American country**
 
 ### Coverage Statistics
-- 🌍 **60+ billion people** covered worldwide
+- 🌍 **5+ billion people** covered worldwide (~70% of world population)
 - 🌎 **All major global markets** supported
 - 📊 **413 comprehensive tests** (100% pass rate)
 - 📦 **Under 25 KB** (still lightweight!)

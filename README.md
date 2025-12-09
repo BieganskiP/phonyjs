@@ -357,7 +357,7 @@ MIT © [Patryk Biegański](https://github.com/BieganskiP)
 ## Stats
 
 - 🌍 **63 countries** across 6 continents
-- 👥 **60+ billion people** covered
+- 👥 **5+ billion people** covered (~70% of world population)
 - 📦 **23.37 KB** (ESM) - lightweight!
 - ✅ **413 tests** - 100% pass rate
 - 🚀 **Production-ready** - battle-tested
