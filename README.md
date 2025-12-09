@@ -394,7 +394,6 @@ MIT © [Patryk Biegański](https://github.com/BieganskiP)
 
 - [ ] Phone number formatting utilities
 - [ ] Phone number parsing (extract country code, area code, etc.)
-- [ ] Carrier/operator detection
 - [ ] Number type detection (mobile vs landline)
 
 ---
