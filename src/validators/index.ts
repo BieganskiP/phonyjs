@@ -30,6 +30,38 @@ import { validateJO } from "./jo";
 import { validateYE } from "./ye";
 import { validateLB } from "./lb";
 import { validateIQ } from "./iq";
+import { validateIE } from "./ie";
+import { validateCH } from "./ch";
+import { validateAT } from "./at";
+import { validateBE } from "./be";
+import { validateDK } from "./dk";
+import { validateFI } from "./fi";
+import { validateHU } from "./hu";
+import { validateCZ } from "./cz";
+import { validateHR } from "./hr";
+import { validateRO } from "./ro";
+import { validateBA } from "./ba";
+import { validateAL } from "./al";
+import { validateME } from "./me";
+import { validateGE } from "./ge";
+import { validateAM } from "./am";
+import { validateKE } from "./ke";
+import { validateUG } from "./ug";
+import { validateSN } from "./sn";
+import { validateAO } from "./ao";
+import { validateZA } from "./za";
+import { validateMV } from "./mv";
+import { validateTH } from "./th";
+import { validateMY } from "./my";
+import { validateNP } from "./np";
+import { validateLK } from "./lk";
+import { validateHK } from "./hk";
+import { validateUZ } from "./uz";
+import { validateKG } from "./kg";
+import { validateAF } from "./af";
+import { validateCY } from "./cy";
+import { validateRU } from "./ru";
+import { validatePH } from "./ph";
 import { validateGeneric } from "./generic";
 
 /**
@@ -79,6 +111,38 @@ export const validators = {
   ye: validateYE,
   lb: validateLB,
   iq: validateIQ,
+  ie: validateIE,
+  ch: validateCH,
+  at: validateAT,
+  be: validateBE,
+  dk: validateDK,
+  fi: validateFI,
+  hu: validateHU,
+  cz: validateCZ,
+  hr: validateHR,
+  ro: validateRO,
+  ba: validateBA,
+  al: validateAL,
+  me: validateME,
+  ge: validateGE,
+  am: validateAM,
+  ke: validateKE,
+  ug: validateUG,
+  sn: validateSN,
+  ao: validateAO,
+  za: validateZA,
+  mv: validateMV,
+  th: validateTH,
+  my: validateMY,
+  np: validateNP,
+  lk: validateLK,
+  hk: validateHK,
+  uz: validateUZ,
+  kg: validateKG,
+  af: validateAF,
+  cy: validateCY,
+  ru: validateRU,
+  ph: validatePH,
 } satisfies Record<string, PhoneValidator>;
 
 /**
