@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2025-12-09
+
+### Changed
+- Updated README.md with comprehensive 31-country documentation
+- Enhanced supported countries tables with all new additions
+- Updated all code examples to showcase new Gulf States and MENA countries
+- Improved coverage statistics and regional breakdowns
+
+### Documentation
+- Added detailed tables for all 13 Middle Eastern countries
+- Highlighted complete GCC (Gulf Cooperation Council) coverage
+- Updated TypeScript examples with all 31 country codes
+- Enhanced quick start examples with Qatar and Turkey
+
 ## [1.5.0] - 2025-12-09
 
 ### Added - Phase 2: Gulf States + MENA 🔥🔥
@@ -215,6 +229,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Node.js**: >=16 required
 - **Package Exports**: Properly configured for types, import, require
 
+[1.5.1]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.5.1
 [1.5.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.5.0
 [1.4.0]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.4.0
 [1.3.1]: https://github.com/BieganskiP/phonyjs/releases/tag/v1.3.1
