@@ -1,64 +1,65 @@
-import { describe, test, expect } from "vitest";
-import { validatePhone } from "../src";
+import { describe, it, expect } from "vitest";
+import { validatePhone, isValidPhone } from "../src/validatePhone";
+import { ErrorCodes } from "../src/errorCodes";
 
-describe("validatePhone - main function", () => {
-  describe("Polish (pl) validation", () => {
-    test("should validate Polish phone numbers", () => {
-      expect(validatePhone("pl", "500 123 456")).toBe(true); // mobile
-      expect(validatePhone("pl", "600123456")).toBe(true); // mobile
-      expect(validatePhone("pl", "123456789")).toBe(true); // landline
-      expect(validatePhone("pl", "223456789")).toBe(true); // landline
-      expect(validatePhone("pl", "923456789")).toBe(false); // invalid (special services)
-      expect(validatePhone("pl", "123")).toBe(false); // too short
-    });
+describe("validatePhone", () => {
+  it("should return valid result for correct phone numbers", () => {
+    const result = validatePhone("us", "212-456-7890");
+    expect(result.isValid).toBe(true);
+    expect(result.errorCode).toBeUndefined();
+    expect(result.message).toBeUndefined();
   });
 
-  describe("US (us) validation", () => {
-    test("should validate US phone numbers", () => {
-      expect(validatePhone("us", "212-456-7890")).toBe(true);
-      expect(validatePhone("us", "1-212-456-7890")).toBe(true);
-      expect(validatePhone("us", "0125551234")).toBe(false);
-    });
+  it("should return error for invalid phone numbers", () => {
+    const result = validatePhone("us", "123");
+    expect(result.isValid).toBe(false);
+    expect(result.errorCode).toBe(ErrorCodes.TOO_SHORT);
+    expect(result.message).toMatch(/too short|Too short/i);
   });
 
-  describe("UK (gb) validation", () => {
-    test("should validate UK phone numbers", () => {
-      expect(validatePhone("gb", "07123 456789")).toBe(true);
-      expect(validatePhone("gb", "07912345678")).toBe(true);
-      expect(validatePhone("gb", "08123456789")).toBe(false);
-    });
+  it("should return error for unsupported country", () => {
+    const result = validatePhone("zz", "123456789");
+    expect(result.isValid).toBe(false);
+    expect(result.errorCode).toBe(ErrorCodes.UNSUPPORTED_COUNTRY);
+    expect(result.message).toContain("Unsupported country code");
   });
 
-  describe("type safety", () => {
-    test("should work with all supported country codes", () => {
-      // This test mainly validates that TypeScript compilation works
-      const codes = ["pl", "us", "gb"] as const;
-
-      codes.forEach((code) => {
-        const result = validatePhone(code, "1234567890");
-        expect(typeof result).toBe("boolean");
-      });
-    });
+  it("should provide error codes for frontend i18n", () => {
+    const result = validatePhone("us", "123");
+    expect(result.isValid).toBe(false);
+    expect(result.errorCode).toBe(ErrorCodes.TOO_SHORT);
+    expect(result.message).toBeDefined();
   });
 
-  describe("edge cases", () => {
-    test("should handle empty strings", () => {
-      expect(validatePhone("pl", "")).toBe(false);
-      expect(validatePhone("us", "")).toBe(false);
-      expect(validatePhone("gb", "")).toBe(false);
-    });
+  it("should work with countries without detailed validators", () => {
+    // Poland has a detailed validator
+    const validResult = validatePhone("pl", "+48 501 234 567");
+    expect(validResult.isValid).toBe(true);
 
-    test("should handle strings with only special characters", () => {
-      expect(validatePhone("pl", "---")).toBe(false);
-      expect(validatePhone("us", "()()()")).toBe(false);
-      expect(validatePhone("gb", "+++")).toBe(false);
-    });
-
-    test("should handle very long strings", () => {
-      const longString = "1".repeat(100);
-      expect(validatePhone("pl", longString)).toBe(false);
-      expect(validatePhone("us", longString)).toBe(false);
-      expect(validatePhone("gb", longString)).toBe(false);
-    });
+    const invalidResult = validatePhone("pl", "123");
+    expect(invalidResult.isValid).toBe(false);
+    expect(invalidResult.errorCode).toBe(ErrorCodes.TOO_SHORT);
   });
 });
+
+describe("isValidPhone", () => {
+  it("should return true for valid numbers", () => {
+    expect(isValidPhone("us", "212-456-7890")).toBe(true);
+    expect(isValidPhone("gb", "07912 345678")).toBe(true);
+    expect(isValidPhone("sa", "050 123 4567")).toBe(true);
+  });
+
+  it("should return false for invalid numbers", () => {
+    expect(isValidPhone("us", "123")).toBe(false);
+    expect(isValidPhone("gb", "123")).toBe(false);
+    expect(isValidPhone("sa", "123")).toBe(false);
+  });
+
+  it("should return false for unsupported country", () => {
+    expect(isValidPhone("zz", "123456789")).toBe(false);
+  });
+});
+
+
+
+

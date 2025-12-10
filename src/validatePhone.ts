@@ -1,72 +1,117 @@
-import {
-  validators,
-  validateGeneric,
-  AvailableCountryCode,
-} from "./validators";
+import { CountryCode, ValidationResult } from "./types";
+import { validators } from "./validators";
+import { ErrorCodes, getMessage } from "./errorCodes";
 
 /**
- * Validates a phone number for a specific country.
+ * Validates a phone number for a specific country with detailed error information
  *
- * This function provides full TypeScript type safety:
- * - Country codes are restricted to available validators
- * - IDE autocomplete for country codes
- * - No runtime errors for unsupported countries
- *
- * @param countryCode - The two-letter country code (e.g., "pl", "us", "gb", "sa")
- * @param phoneNumber - The phone number to validate (can include formatting characters)
- * @returns true if the phone number is valid for the specified country, false otherwise
+ * @param countryCode - Two-letter ISO country code (e.g., "gb", "us", "sa")
+ * @param phoneNumber - The phone number to validate
+ * @returns ValidationResult with isValid, errorCode (type-safe), message, and details
  *
  * @example
- * validatePhone("pl", "500 123 456"); // true
- * validatePhone("us", "212-456-7890"); // true
- * validatePhone("gb", "07912345678"); // true
- * validatePhone("sa", "050 123 4567"); // true
- * validatePhone("pl", "invalid"); // false
+ * ```typescript
+ * // Valid number
+ * validatePhone("us", "+1 212 456 7890")
+ * // → { isValid: true }
+ *
+ * // Invalid number
+ * const result = validatePhone("us", "123")
+ * // → {
+ * //     isValid: false,
+ * //     errorCode: "INVALID_FORMAT",
+ * //     message: "Invalid phone number format for US"
+ * //   }
+ *
+ * // Use errorCode on frontend for i18n
+ * if (result.errorCode === "INVALID_FORMAT") {
+ *   displayMessage(t("errors.invalidFormat", { country: "US" }));
+ * }
+ * ```
  */
 export function validatePhone(
-  countryCode: AvailableCountryCode,
+  countryCode: CountryCode,
   phoneNumber: string
-): boolean {
-  const validator = validators[countryCode];
-  return validator(phoneNumber);
+): ValidationResult {
+  const normalizedCode = countryCode.toLowerCase();
+  const validator = validators[normalizedCode as keyof typeof validators];
+
+  if (!validator) {
+    const details = { code: countryCode };
+    return {
+      isValid: false,
+      errorCode: ErrorCodes.UNSUPPORTED_COUNTRY,
+      message: getMessage(ErrorCodes.UNSUPPORTED_COUNTRY, details),
+      details,
+    };
+  }
+
+  const result = validator(phoneNumber);
+
+  // Handle enhanced validators that return ValidationResult
+  if (typeof result === "object") {
+    return result;
+  }
+
+  // Handle legacy boolean validators
+  if (result) {
+    return { isValid: true };
+  }
+
+  const details = { country: countryCode.toUpperCase() };
+  return {
+    isValid: false,
+    errorCode: ErrorCodes.INVALID_FORMAT,
+    message: getMessage(ErrorCodes.INVALID_FORMAT, details),
+    details,
+  };
 }
 
 /**
- * Validates a phone number with fallback to generic validation.
+ * Simple boolean validator for backward compatibility
+ * Returns true if valid, false if invalid
  *
- * This function allows validation for any country code string:
- * - Uses specific validator if available
- * - Falls back to generic validation for unsupported countries
- * - No TypeScript restrictions on country codes
- *
- * Use this when you need to support any country code, even those
- * without specific validators implemented.
- *
- * @param countryCode - Any country code string
- * @param phoneNumber - The phone number to validate (can include formatting characters)
- * @param options - Optional configuration
- * @param options.strict - If true, only use specific validators (no fallback)
- * @returns true if the phone number is valid, false otherwise
+ * @param countryCode - Two-letter ISO country code
+ * @param phoneNumber - The phone number to validate
+ * @returns boolean - true if valid, false otherwise
  *
  * @example
- * validatePhoneWithFallback("pl", "500 123 456"); // true (uses specific validator)
- * validatePhoneWithFallback("fr", "0612345678"); // true (uses generic validator)
- * validatePhoneWithFallback("fr", "123", { strict: true }); // false (no specific validator)
+ * ```typescript
+ * isValidPhone("us", "+1 212 456 7890") // → true
+ * isValidPhone("us", "123") // → false
+ * ```
+ */
+export function isValidPhone(
+  countryCode: CountryCode,
+  phoneNumber: string
+): boolean {
+  return validatePhone(countryCode, phoneNumber).isValid;
+}
+
+/**
+ * @deprecated Use validatePhone() instead. This function is kept for backward compatibility.
+ * Validates with fallback to generic validator for unsupported countries.
  */
 export function validatePhoneWithFallback(
-  countryCode: string,
+  countryCode: CountryCode,
   phoneNumber: string,
-  options: { strict?: boolean } = {}
-): boolean {
-  const validator = validators[countryCode as AvailableCountryCode];
+  strict: boolean = false
+): ValidationResult {
+  const result = validatePhone(countryCode, phoneNumber);
 
-  if (validator) {
-    return validator(phoneNumber);
+  // If unsupported and not strict, use generic validation
+  if (result.errorCode === ErrorCodes.UNSUPPORTED_COUNTRY && !strict) {
+    // Basic validation: at least 7 digits, not too long
+    const digits = phoneNumber.replace(/\D/g, "");
+    if (digits.length >= 7 && digits.length <= 15) {
+      return { isValid: true };
+    }
+    return {
+      isValid: false,
+      errorCode: ErrorCodes.INVALID_FORMAT,
+      message: getMessage(ErrorCodes.INVALID_FORMAT),
+    };
   }
 
-  if (options.strict) {
-    return false;
-  }
-
-  return validateGeneric(phoneNumber);
+  return result;
 }

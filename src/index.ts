@@ -1,18 +1,26 @@
 /**
  * PhonyJS - Type-safe phone number validation library
- * 
+ *
  * A modern, extensible library for validating phone numbers with country-specific rules.
  * Built with TypeScript for maximum type safety and developer experience.
  */
 
 // Main validation functions
-export { validatePhone, validatePhoneWithFallback } from "./validatePhone";
+export {
+  validatePhone,
+  isValidPhone,
+  validatePhoneWithFallback,
+} from "./validatePhone";
 
 // Validators registry (for direct access to individual validators)
 export { validators, validateGeneric } from "./validators";
 
+// Error codes for frontend i18n
+export { ErrorCodes } from "./errorCodes";
+export type { ErrorCode } from "./errorCodes";
+
 // Type exports for TypeScript consumers
-export type { PhoneValidator } from "./types";
+export type { PhoneValidator, ValidationResult } from "./types";
 export type { AvailableCountryCode } from "./validators";
 
 // Re-export individual validators for tree-shaking
@@ -79,4 +87,3 @@ export { validateAF } from "./validators/af";
 export { validateCY } from "./validators/cy";
 export { validateRU } from "./validators/ru";
 export { validatePH } from "./validators/ph";
-
