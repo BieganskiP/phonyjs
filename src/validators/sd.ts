@@ -1,45 +1,136 @@
-import { PhoneValidator } from "../types";
+import { PhoneValidator, ValidationResult } from "../types";
+import { ErrorCodes, getMessage } from "../errorCodes";
 
 /**
- * Validates Sudanese phone numbers (mobile and landline).
- * 
+ * Validates Sudanese phone numbers with detailed error messages.
+ *
  * Rules:
- * - Mobile: 9 digits starting with 9x (90, 91, 92, 99, etc.)
+ * - Mobile: 9-10 digits starting with 9x (90, 91, 92, 99, etc.)
  * - Landline: 9 digits with area codes (e.g., 15-Khartoum, 18-Omdurman)
- * - Non-digit characters are stripped before validation
- * - Handles international format (+249 prefix)
- * 
+ * - Handles international format (+249 prefix) and 00249 prefix
+ *
  * Mobile carriers:
  * - 90, 91, 92: Zain
  * - 99, 98: Sudani
  * - 95, 96: MTN
- * 
+ *
  * Major area codes:
  * - 15: Khartoum
  * - 18: Omdurman
  * - 41: Port Sudan
- * 
+ *
  * @example
- * validateSD("091 234 5678") // true (mobile - Zain)
- * validateSD("15 234 5678") // true (landline - Khartoum)
- * validateSD("+249 91 234 5678") // true (international mobile)
- * validateSD("+249 15 234 5678") // true (international landline)
+ * validateSD("091 234 5678") // { isValid: true }
+ * validateSD("051 234 5678") // { isValid: false, errorCode: "INVALID_PREFIX", ... }
  */
-export const validateSD: PhoneValidator = (phone) => {
+export const validateSD: PhoneValidator = (phone: string): ValidationResult => {
+  // Check for invalid characters first
+  if (phone && !/^[0-9+\s\-().]+$/.test(phone)) {
+    return {
+      isValid: false,
+      errorCode: ErrorCodes.INVALID_CHARACTERS,
+      message: getMessage(ErrorCodes.INVALID_CHARACTERS),
+    };
+  }
+
   let digits = phone.replace(/\D/g, "");
-  
-  // Remove country code if present (+249)
-  if (digits.startsWith("249") && digits.length > 9) {
+
+  // Handle international formats
+  if (digits.startsWith("00249") && digits.length >= 14) {
+    digits = digits.slice(5);
+  } else if (digits.startsWith("249") && digits.length >= 12) {
     digits = digits.slice(3);
   }
-  
-  // Sudanese numbers can be 9 or 10 digits (with leading 0 for mobile)
-  // Mobile: 09x followed by 7 digits (10 total) OR 9x followed by 7 digits (9 total without leading 0)
-  const isMobile = /^0?9[0-9]\d{7}$/.test(digits);
-  
-  // Landline: 1x, 2x, etc. followed by remaining digits (9 total)
-  const isLandline = /^[1-8]\d{8}$/.test(digits) && digits.length === 9;
-  
-  return isMobile || isLandline;
-};
 
+  // Check minimum length
+  if (digits.length < 9) {
+    return {
+      isValid: false,
+      errorCode: ErrorCodes.TOO_SHORT,
+      message: getMessage(ErrorCodes.TOO_SHORT, {
+        expected: "9-10",
+        got: digits.length,
+      }),
+      details: { expected: "9-10", got: digits.length },
+    };
+  }
+
+  // Check maximum length
+  if (digits.length > 10) {
+    return {
+      isValid: false,
+      errorCode: ErrorCodes.TOO_LONG,
+      message: getMessage(ErrorCodes.TOO_LONG, {
+        expected: "9-10",
+        got: digits.length,
+      }),
+      details: { expected: "9-10", got: digits.length },
+    };
+  }
+
+  // Remove leading 0 if present (mobile can be with or without)
+  const hasLeadingZero = digits.startsWith("0");
+  if (hasLeadingZero && digits.startsWith("09")) {
+    digits = digits.slice(1);
+  }
+
+  // Mobile: 9x followed by 7 digits (9 total without leading 0)
+  if (digits.startsWith("9")) {
+    if (digits.length !== 9) {
+      return {
+        isValid: false,
+        errorCode:
+          digits.length < 9 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+        message: getMessage(
+          digits.length < 9 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+          { expected: 9, got: digits.length, type: "mobile" }
+        ),
+        details: { expected: 9, got: digits.length, type: "mobile" },
+      };
+    }
+
+    if (!/^9\d{8}$/.test(digits)) {
+      return {
+        isValid: false,
+        errorCode: ErrorCodes.INVALID_FORMAT,
+        message: getMessage(ErrorCodes.INVALID_FORMAT, {
+          country: "Sudan",
+          type: "mobile",
+        }),
+        details: { country: "Sudan", type: "mobile" },
+      };
+    }
+
+    return { isValid: true };
+  }
+
+  // Landline: 1x, 2x, etc. followed by remaining digits (9 total)
+  if (/^[1-8]/.test(digits) && digits.length === 9) {
+    if (!/^[1-8]\d{8}$/.test(digits)) {
+      return {
+        isValid: false,
+        errorCode: ErrorCodes.INVALID_FORMAT,
+        message: getMessage(ErrorCodes.INVALID_FORMAT, {
+          country: "Sudan",
+          type: "landline",
+        }),
+        details: { country: "Sudan", type: "landline" },
+      };
+    }
+
+    return { isValid: true };
+  }
+
+  return {
+    isValid: false,
+    errorCode: ErrorCodes.INVALID_PREFIX,
+    message: getMessage(ErrorCodes.INVALID_PREFIX, {
+      validPrefixes: ["9 (mobile)", "1-8 (landline)"],
+      country: "Sudan",
+    }),
+    details: {
+      validPrefixes: ["9 (mobile)", "1-8 (landline)"],
+      country: "Sudan",
+    },
+  };
+};

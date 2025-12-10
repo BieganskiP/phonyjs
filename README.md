@@ -1,6 +1,6 @@
 # PhonyJS
 
-> Type-safe phone number validation library with country-specific rules
+> Type-safe phone number validation library with detailed error messages and i18n support
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,46 +9,52 @@
 
 **Created by [Patryk Biegański](https://github.com/BieganskiP)** | [GitHub](https://github.com/BieganskiP/phonyjs) | [NPM](https://www.npmjs.com/package/phonyjs)
 
-## Features
+## ✨ Features
 
+✅ **Detailed Error Messages** - Know exactly why validation failed  
+✅ **i18n Support** - Custom messages in any language  
+✅ **Error Codes** - Machine-readable validation results  
 ✅ **63 Countries** - Comprehensive global coverage  
-✅ **Type-safe** - Full TypeScript support with strict typing  
+✅ **Type-safe** - Full TypeScript support  
 ✅ **Tree-shakeable** - Import only what you need  
 ✅ **Zero dependencies** - Lightweight and fast  
 ✅ **Mobile & Landline** - Both formats supported  
-✅ **International formats** - Handles +XX country codes  
-✅ **Well-tested** - 413 tests, 100% pass rate  
-✅ **Production-ready** - Under 25 KB bundle size
+✅ **International formats** - Handles +XX and 00XX prefixes  
+✅ **Production-ready** - 411 tests, 100% pass rate
 
-## Installation
+## 📦 Installation
 
 ```bash
 npm install phonyjs
 ```
 
-## Quick Start
+## 🚀 Quick Start
 
 ```typescript
-import { validatePhone } from "phonyjs";
+import { validatePhone, isValidPhone } from "phonyjs";
 
-// Validate phone numbers from 63 countries worldwide 🌍
-validatePhone("us", "+1 (212) 456-7890"); // true - USA
-validatePhone("gb", "07912 345678"); // true - UK
-validatePhone("pl", "123 456 789"); // true - Poland
-validatePhone("sa", "+966 50 123 4567"); // true - Saudi Arabia
-validatePhone("jp", "090-1234-5678"); // true - Japan
-validatePhone("de", "0151 12345678"); // true - Germany
-validatePhone("ru", "8 912 345 67 89"); // true - Russia
-validatePhone("au", "04 1234 5678"); // true - Australia
+// Get detailed validation results
+const result = validatePhone("us", "123");
+console.log(result);
+// {
+//   isValid: false,
+//   errorCode: "TOO_SHORT",
+//   message: "Too short - expected 10 digits, got 3",
+//   details: { expected: 10, got: 3 }
+// }
 
-// Invalid numbers return false
-validatePhone("us", "invalid"); // false
-validatePhone("gb", "1234"); // false
+// Or just check if valid
+if (isValidPhone("us", "+1 212 456 7890")) {
+  console.log("Valid!");
+}
 ```
 
-## Supported Countries
+## 🌍 Supported Countries
 
-**63 countries** covering 60+ billion people across 6 continents 🌍
+**63 countries** covering 5+ billion people (~70% of world population)
+
+<details>
+<summary><b>View all supported countries</b></summary>
 
 ### Europe (24 countries) 🇪🇺
 
@@ -58,27 +64,28 @@ validatePhone("gb", "1234"); // false
 | United Kingdom       | `gb` | `07912 345678`    |
 | France               | `fr` | `06 12 34 56 78`  |
 | Germany              | `de` | `0151 12345678`   |
-| Spain                | `es` | `612 345 678`     |
-| Italy                | `it` | `312 345 6789`    |
-| Netherlands          | `nl` | `06 1234 5678`    |
-| Greece               | `gr` | `690 123 4567`    |
-| Ireland              | `ie` | `087 123 4567`    |
-| Switzerland          | `ch` | `079 123 45 67`   |
-| Austria              | `at` | `0650 123 4567`   |
+| Spain                | `es` | `612 34 56 78`    |
+| Italy                | `it` | `320 123 4567`    |
+| Netherlands          | `nl` | `06 12345678`     |
+| Switzerland          | `ch` | `078 123 45 67`   |
+| Austria              | `at` | `0664 123456`     |
 | Belgium              | `be` | `0470 12 34 56`   |
-| Denmark              | `dk` | `12 34 56 78`     |
+| Ireland              | `ie` | `085 123 4567`    |
+| Greece               | `gr` | `694 123 4567`    |
+| Turkey               | `tr` | `0532 123 45 67`  |
+| Denmark              | `dk` | `20 12 34 56`     |
 | Finland              | `fi` | `040 123 4567`    |
-| Hungary              | `hu` | `20 123 4567`     |
+| Hungary              | `hu` | `06 20 123 4567`  |
 | Czech Republic       | `cz` | `601 123 456`     |
 | Croatia              | `hr` | `091 123 4567`    |
-| Romania              | `ro` | `0722 123 456`    |
+| Romania              | `ro` | `0712 345 678`    |
 | Bosnia & Herzegovina | `ba` | `061 123 456`     |
-| Albania              | `al` | `069 123 4567`    |
+| Albania              | `al` | `067 212 3456`    |
 | Montenegro           | `me` | `067 123 456`     |
-| Georgia              | `ge` | `555 123 456`     |
-| Armenia              | `am` | `077 123 456`     |
+| Georgia              | `ge` | `555 12 34 56`    |
+| Armenia              | `am` | `091 123456`      |
 | Russia               | `ru` | `8 912 345 67 89` |
-| Cyprus               | `cy` | `96 123 456`      |
+| Cyprus               | `cy` | `96 123456`       |
 
 ### Middle East (13 countries) 🕌
 
@@ -86,16 +93,15 @@ validatePhone("gb", "1234"); // false
 | ------------ | ---- | --------------- |
 | Saudi Arabia | `sa` | `050 123 4567`  |
 | UAE          | `ae` | `050 123 4567`  |
-| Qatar        | `qa` | `3123 4567`     |
-| Kuwait       | `kw` | `5123 4567`     |
-| Bahrain      | `bh` | `3123 4567`     |
-| Oman         | `om` | `7123 4567`     |
 | Egypt        | `eg` | `010 1234 5678` |
-| Turkey       | `tr` | `0532 123 4567` |
-| Jordan       | `jo` | `7 9123 4567`   |
-| Lebanon      | `lb` | `3 123 456`     |
-| Iraq         | `iq` | `7812 345 678`  |
-| Yemen        | `ye` | `7 1234 5678`   |
+| Qatar        | `qa` | `3312 3456`     |
+| Kuwait       | `kw` | `9123 4567`     |
+| Bahrain      | `bh` | `3600 1234`     |
+| Oman         | `om` | `9123 4567`     |
+| Jordan       | `jo` | `07 9012 3456`  |
+| Yemen        | `ye` | `71 123 4567`   |
+| Lebanon      | `lb` | `03 123 456`    |
+| Iraq         | `iq` | `0750 123 4567` |
 | Sudan        | `sd` | `091 234 5678`  |
 
 ### Asia-Pacific (18 countries) 🌏
@@ -138,36 +144,77 @@ validatePhone("gb", "1234"); // false
 | United States | `us` | `(212) 456-7890` |
 | Canada        | `ca` | `416-123-4567`   |
 
-## Usage
+</details>
+
+## 💡 Usage
 
 ### Basic Validation
 
 ```typescript
-import { validatePhone } from "phonyjs";
+import { validatePhone, isValidPhone } from "phonyjs";
 
-// Simple validation
-const isValid = validatePhone("us", "+1 (212) 456-7890");
-console.log(isValid); // true
+// Get detailed results
+const result = validatePhone("us", "+1 212 456 7890");
+console.log(result);
+// → { isValid: true }
 
-// Works with various formats
-validatePhone("pl", "123456789"); // true
-validatePhone("pl", "123 456 789"); // true
-validatePhone("pl", "+48 123 456 789"); // true
-validatePhone("pl", "48-123-456-789"); // true
+// Just boolean
+if (isValidPhone("gb", "07912 345678")) {
+  console.log("Valid UK mobile!");
+}
+```
+
+### Error Handling
+
+```typescript
+const result = validatePhone("us", "012-345-6789");
+
+if (!result.isValid) {
+  console.log(`Error: ${result.message}`);
+  // → "Error: Invalid area code - cannot start with 0"
+
+  console.log(`Code: ${result.errorCode}`);
+  // → "Code: INVALID_AREA_CODE"
+
+  console.log(`Details:`, result.details);
+  // → Details: { code: "012", reason: "cannot start with 0" }
+}
+```
+
+### Available Error Codes
+
+```typescript
+import { ErrorCodes } from "phonyjs";
+
+ErrorCodes.TOO_SHORT; // "TOO_SHORT"
+ErrorCodes.TOO_LONG; // "TOO_LONG"
+ErrorCodes.INVALID_CHARACTERS; // "INVALID_CHARACTERS"
+ErrorCodes.INVALID_FORMAT; // "INVALID_FORMAT"
+ErrorCodes.INVALID_AREA_CODE; // "INVALID_AREA_CODE"
+ErrorCodes.INVALID_MOBILE_PREFIX; // "INVALID_MOBILE_PREFIX"
+ErrorCodes.INVALID_EXCHANGE_CODE; // "INVALID_EXCHANGE_CODE"
+ErrorCodes.INVALID_PREFIX; // "INVALID_PREFIX"
+ErrorCodes.UNSUPPORTED_COUNTRY; // "UNSUPPORTED_COUNTRY"
+ErrorCodes.PERSONAL_NUMBER_PREFIX; // "PERSONAL_NUMBER_PREFIX" (UK 070)
+ErrorCodes.MISSING_LEADING_ZERO; // "MISSING_LEADING_ZERO"
 ```
 
 ### TypeScript Support
 
-Full autocomplete and type checking:
+Full type safety with autocomplete:
 
 ```typescript
-import { validatePhone, AvailableCountryCode } from "phonyjs";
+import { validatePhone, ValidationResult, AvailableCountryCode } from "phonyjs";
 
 // TypeScript autocompletes all 63 country codes
-const countryCode: AvailableCountryCode = "ru";
+const country: AvailableCountryCode = "us";
 
-// Type error if using unsupported country
-validatePhone("xx", "123456789"); // ❌ TypeScript error
+// Result is fully typed
+const result: ValidationResult = validatePhone(country, "123");
+if (!result.isValid) {
+  console.log(result.errorCode); // ✅ Type-safe
+  console.log(result.details); // ✅ Type-safe
+}
 ```
 
 ### Tree-Shaking (Optimal Bundle Size)
@@ -175,96 +222,75 @@ validatePhone("xx", "123456789"); // ❌ TypeScript error
 Import only the validators you need:
 
 ```typescript
-import { validateUS, validateGB, validatePL, validateRU } from "phonyjs";
+import { validateUS, validateGB, validatePL } from "phonyjs";
 
 validateUS("212-456-7890"); // true
 validateGB("07912 345678"); // true
 validatePL("123 456 789"); // true
-validateRU("8 912 345 67 89"); // true
 ```
-
-### Validator Registry
-
-Access validators directly:
-
-```typescript
-import { validators } from "phonyjs";
-
-// Get all available country codes
-const countries = Object.keys(validators);
-console.log(countries.length); // 63
-
-// Use validators directly
-validators.us("212-456-7890"); // true
-validators.sa("+966 50 123 4567"); // true
-```
-
-### Fallback for Unsupported Countries
-
-```typescript
-import { validatePhoneWithFallback } from "phonyjs";
-
-// Returns true for basic validation if country not supported
-validatePhoneWithFallback("us", "212-456-7890"); // true
-validatePhoneWithFallback("zz", "+1234567890"); // true (basic check)
-validatePhoneWithFallback("zz", "invalid", true); // false (strict mode)
-```
-
-## Validation Features
 
 ### International Format Support
 
 All validators support international dialing codes:
 
-- `+XX` prefix format (e.g., `+1`, `+44`, `+966`)
-- Automatic country code stripping and normalization
-- Handles various formatting (spaces, dashes, parentheses)
-
-### Mobile & Landline Support
-
-Every country validator supports both:
-
-- ✅ Mobile numbers (with operator-specific prefixes)
-- ✅ Landline numbers (with area codes)
-
-### Format Flexibility
-
 ```typescript
-// All these are valid for US numbers:
-validatePhone("us", "2124567890");
-validatePhone("us", "212-456-7890");
-validatePhone("us", "(212) 456-7890");
-validatePhone("us", "+1 212 456 7890");
-validatePhone("us", "1-212-456-7890");
+// +XX format
+validatePhone("us", "+1 212 456 7890"); // ✅
+validatePhone("gb", "+44 7912 345678"); // ✅
+validatePhone("sa", "+966 50 123 4567"); // ✅
+
+// 00XX format
+validatePhone("us", "001 212 456 7890"); // ✅
+validatePhone("gb", "0044 7912 345678"); // ✅
+validatePhone("sa", "00966 50 123 4567"); // ✅
 ```
 
-## API Reference
+**Note:** Full `00` prefix support currently available for GB, US, SA. Other countries coming soon!
 
-### `validatePhone(countryCode, phoneNumber)`
+## 📖 API Reference
 
-Main validation function.
+### `validatePhone(countryCode, phoneNumber, options?)`
+
+Main validation function with detailed error information.
 
 ```typescript
 function validatePhone(
-  countryCode: AvailableCountryCode,
-  phoneNumber: string
-): boolean;
+  countryCode: string,
+  phoneNumber: string,
+  options?: ValidationOptions
+): ValidationResult;
+
+interface ValidationResult {
+  isValid: boolean;
+  errorCode?: string;
+  message?: string;
+  details?: Record<string, any>;
+}
+
+interface ValidationOptions {
+  messages?: Record<string, MessageFormatter | string>;
+}
 ```
 
-**Parameters:**
+**Returns:** Detailed validation result
 
-- `countryCode` - Two-letter ISO country code
-- `phoneNumber` - Phone number string (any format)
+### `isValidPhone(countryCode, phoneNumber)`
 
-**Returns:** `boolean` - `true` if valid for that country
+Simple boolean validator for quick checks.
+
+```typescript
+function isValidPhone(countryCode: CountryCode, phoneNumber: string): boolean;
+```
+
+**Returns:** `true` if valid, `false` otherwise
 
 ### `validatePhoneWithFallback(countryCode, phoneNumber, strict?)`
 
-Validation with fallback for unsupported countries.
+Validation with fallback to generic validation for unsupported countries.
 
 ```typescript
 function validatePhoneWithFallback(
-  countryCode: string,
+  countryCode: CountryCode,
   phoneNumber: string,
   strict?: boolean
 ): boolean;
@@ -273,132 +299,51 @@ function validatePhoneWithFallback(
 **Parameters:**
 
 - `countryCode` - Any country code string
-- `phoneNumber` - Phone number string
+- `phoneNumber` - Phone number to validate
 - `strict` - If true, returns false for unsupported countries
 
-### Individual Validators
+## 🤝 Contributing
 
-Each country has its own named export:
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-```typescript
-import {
-  validateUS,
-  validateGB,
-  validatePL,
-  validateSA,
-  validateRU,
-  validateJP,
-  validateCN,
-  validateDE,
-  validateFR,
-  validateAU,
-  // ... and 53 more!
-} from "phonyjs";
-```
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Run tests
-npm test
-
-# Build
-npm run build
-
-# Lint
-npm run lint
-
-# Format
-npm run format
-```
-
-## Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
-To add a new country:
-
-1. Create validator in `src/validators/XX.ts`
-2. Add to registry in `src/validators/index.ts`
-3. Export in `src/index.ts`
-4. Add tests in `test/XX.test.ts`
-
-## Author
-
-**Patryk Biegański**
-
-- GitHub: [@BieganskiP](https://github.com/BieganskiP)
-- LinkedIn: [in/patrykbieganski](https://www.linkedin.com/in/patrykbieganski)
-
-Fullstack Developer specializing in JavaScript/TypeScript, ReactJS, NodeJS, NestJS, MongoDB, and MySQL.
-
-## Support This Project ☕
-
-If you find PhonyJS useful, consider supporting its development:
-
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://buycoffee.to/pbieganski)
-
-Your support helps:
-
-- 🌍 Add more countries
-- 🐛 Fix bugs and improve validation
-- 📚 Maintain documentation
-- ✨ Build new features
-
-[**☕ Support PhonyJS**](https://buycoffee.to/pbieganski)
-
-## License
+## 📄 License
 
 MIT © [Patryk Biegański](https://github.com/BieganskiP)
 
-## Stats
+## ☕ Support
 
-- 🌍 **63 countries** across 6 continents
-- 👥 **5+ billion people** covered (~70% of world population)
-- 📦 **23.37 KB** (ESM) - lightweight!
-- ✅ **413 tests** - 100% pass rate
-- 🚀 **Production-ready** - battle-tested
+If you find this library helpful, consider [buying me a coffee](https://buycoffee.to/pbieganski)! ☕
 
-## Roadmap
+---
 
-### ✅ Completed
+## 🗺️ Roadmap
+
+### ✅ Completed (v2.0.0)
 
 - [x] 63 countries with mobile & landline support
-- [x] Full TypeScript support with autocomplete
-- [x] Tree-shaking optimization
-- [x] International format handling
+- [x] Detailed error messages with error codes
+- [x] Full TypeScript support
+- [x] Tree-shaking support
+- [x] `00` prefix support (GB, US, SA)
 - [x] Zero dependencies
-- [x] Comprehensive test coverage (413 tests)
+- [x] 411 comprehensive tests
 
 ### 🚀 Planned Features
 
 #### Expand Coverage
 
 - [ ] Add remaining countries to achieve **global coverage** (190+ countries)
+- [ ] Expand `00` prefix support to all countries
 - [ ] Region-specific validation (states, provinces)
 
-#### Enhanced Validation
-
-- [ ] **Support `00` international prefix** (in addition to `+`)
-  - Currently: `+44 7912 345678` ✅
-  - Planned: `0044 7912 345678` ✅
-- [ ] **Detailed error messages** instead of boolean
-  - "Too short" / "Too long"
-  - "Invalid characters"
-  - "Invalid area code"
-  - "Invalid mobile prefix"
-  - "Invalid format"
-- [ ] Validation with error details: `{ isValid: boolean, error?: string }`
-
-#### New Utilities
+#### Enhanced Features
 
 - [ ] Phone number formatting utilities
 - [ ] Phone number parsing (extract country code, area code, etc.)
 - [ ] Number type detection (mobile vs landline)
+- [ ] Carrier/operator detection
+- [ ] More granular error codes per country
 
 ---
 
-**PhonyJS** - The most comprehensive type-safe phone validation library for JavaScript/TypeScript 🚀
+Made with ❤️ by [Patryk Biegański](https://github.com/BieganskiP)

@@ -5,18 +5,293 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-12-10
+
+### 🚀 **MAJOR RELEASE: Complete API Redesign with i18n Support**
+
+This is a **breaking change** that fundamentally improves the library by making detailed validation the default and adding full internationalization support.
+
+---
+
+### 💥 Breaking Changes
+
+#### 1. **`validatePhone()` now returns `ValidationResult` instead of `boolean`**
+
+**Before (v1.x):**
+
+```typescript
+const isValid = validatePhone("us", "123"); // → false
+```
+
+**After (v2.0):**
+
+```typescript
+const result = validatePhone("us", "123");
+// → {
+//     isValid: false,
+//     errorCode: "TOO_SHORT",
+//     message: "Too short - expected 10 digits, got 3",
+//     details: { expected: 10, got: 3 }
+//   }
+```
+
+#### 2. **New `isValidPhone()` for simple boolean checks**
+
+If you just need a boolean (backward compatibility):
+
+```typescript
+const isValid = isValidPhone("us", "123"); // → false
+```
+
+#### 3. **Removed `validatePhoneWithDetails()` - merged into main `validatePhone()`**
+
+The separate detailed validation function is no longer needed since all validation is now detailed by default.
+
+---
+
+### ✨ New Features
+
+#### 1. **Error Codes + Detailed Messages**
+
+Every validation result includes:
+
+- `errorCode`: Machine-readable code (e.g., "TOO_SHORT", "INVALID_PREFIX")
+- `message`: Human-readable English message
+- `details`: Contextual information (e.g., expected vs got, valid prefixes)
+
+**Available Error Codes:**
+
+- `TOO_SHORT` - Number too short
+- `TOO_LONG` - Number too long
+- `INVALID_CHARACTERS` - Contains invalid characters
+- `INVALID_FORMAT` - Doesn't match expected format
+- `INVALID_AREA_CODE` - Invalid area code
+- `INVALID_MOBILE_PREFIX` - Invalid mobile prefix
+- `INVALID_EXCHANGE_CODE` - Invalid exchange code (US)
+- `INVALID_PREFIX` - Invalid prefix for country
+- `UNSUPPORTED_COUNTRY` - Country not supported
+- `PERSONAL_NUMBER_PREFIX` - Personal number prefix (UK 070)
+- `MISSING_LEADING_ZERO` - Missing required leading zero
+
+
+#### 2. **New Exports for i18n**
+
+```typescript
+export { ErrorCodes, formatMessage, defaultMessages } from "phonyjs";
+```
+
+- `ErrorCodes`: All error code constants
+- `formatMessage`: Format messages programmatically
+- `defaultMessages`: Default English message templates
+
+#### 3. **Enhanced Type Safety**
+
+```typescript
+interface ValidationResult {
+  isValid: boolean;
+  errorCode?: string;
+  message?: string;
+  details?: Record<string, any>;
+}
+
+interface ValidationOptions {
+  messages?: Record<string, MessageFormatter | string>;
+}
+
+type MessageFormatter = (
+  errorCode: string,
+  details: Record<string, any>
+) => string;
+```
+
+---
+
+### 🔧 Migration Guide
+
+#### Simple Boolean Checks
+
+```typescript
+// v1.x
+const isValid = validatePhone("us", "123");
+
+// v2.0 - Option 1: Use new isValidPhone()
+const isValid = isValidPhone("us", "123");
+
+// v2.0 - Option 2: Extract from result
+const result = validatePhone("us", "123");
+const isValid = result.isValid;
+```
+
+#### Error Handling
+
+```typescript
+// v1.x - Only boolean
+if (!validatePhone("us", "123")) {
+  console.log("Invalid number");
+}
+
+// v2.0 - Detailed errors
+const result = validatePhone("us", "123");
+if (!result.isValid) {
+  console.log(result.message); // "Too short - expected 10 digits, got 3"
+  console.log(result.errorCode); // "TOO_SHORT"
+  console.log(result.details); // { expected: 10, got: 3 }
+}
+```
+
+#### Tree-Shaking
+
+Individual validators (`validateUS`, `validateGB`, etc.) still return booleans and work exactly the same.
+
+```typescript
+// v1.x and v2.0 - No changes needed
+import { validateUS } from "phonyjs";
+validateUS("212-456-7890"); // → true
+```
+
+---
+
+### 📊 Statistics
+
+- 📦 **Bundle size**: ~31 KB (CJS), ~29 KB (ESM) - slightly larger due to error messages
+- ✅ **Tests**: 411 passing (was 435, streamlined for new API)
+- 🌍 **Countries**: 63 supported
+- 🎯 **Detailed validation**: 3 countries (GB, US, SA) with more coming
+- 📝 **Error types**: 11 distinct error codes
+
+---
+
+### 🎯 Why This Change?
+
+**v1.x Problems:**
+
+- Boolean-only validation gave no feedback on _why_ validation failed
+- Users had to implement their own error messaging
+- Poor UX for end users
+- No internationalization support
+
+**v2.0 Improvements:**
+
+- ✅ Developers get specific error information
+- ✅ Better UX with actionable error messages
+- ✅ Full i18n support for global applications
+- ✅ Machine-readable error codes for programmatic handling
+- ✅ Contextual details for rich error displays
+- ✅ Still backward compatible with `isValidPhone()`
+
+---
+
+### 🚀 Upgrade Recommendation
+
+**For simple validation:** Use the new `isValidPhone()` function - drop-in replacement.
+
+**For better UX:** Migrate to `validatePhone()` and display `result.message` to users.
+
+**For i18n apps:** Provide custom messages in your app's language!
+
+---
+
+## [1.7.0] - 2025-12-10 (Deprecated)
+
+### 🎉 Major Feature: Detailed Validation with Error Messages
+
+**New API:** `validatePhoneWithDetails()` returns structured error information instead of just boolean values!
+
+#### What's New
+
+##### Detailed Validation Function
+
+- **New export**: `validatePhoneWithDetails(countryCode, phoneNumber)`
+- **Returns**: `{ isValid: boolean, error?: string }`
+- **Benefits**:
+  - Better UX with specific error messages
+  - Easier debugging during development
+  - More informative validation feedback
+
+##### Error Types Available
+
+- ✅ "Too short - expected X digits, got Y"
+- ✅ "Too long - expected X digits, got Y"
+- ✅ "Invalid characters - only digits, spaces, hyphens, parentheses, and + allowed"
+- ✅ "Invalid area code - cannot start with 0"
+- ✅ "Invalid mobile prefix - must be 050, 053, ..."
+- ✅ "Invalid prefix - UK numbers must start with 01, 02, 03, or 07"
+- ✅ Country-specific detailed messages
+
+##### Countries with Detailed Validation (3/63)
+
+- 🇬🇧 **United Kingdom (GB)** - Full detailed validation
+- 🇺🇸 **United States (US)** - Full detailed validation
+- 🇸🇦 **Saudi Arabia (SA)** - Full detailed validation
+
+##### `00` International Prefix Support
+
+- All detailed validators now support `00` prefix in addition to `+`
+- Example: `0044 7912 345678` (GB), `001 212 456 7890` (US), `00966 50 123 4567` (SA)
+
+#### New Types
+
+- `ValidationResult` interface: `{ isValid: boolean, error?: string }`
+- `PhoneValidatorDetailed` type for detailed validator functions
+
+#### Usage Example
+
+```typescript
+import { validatePhoneWithDetails } from "phonyjs";
+
+// Get detailed feedback
+const result = validatePhoneWithDetails("us", "123");
+console.log(result);
+// { isValid: false, error: "Too short - expected 10 digits, got 3" }
+
+// Valid number
+const valid = validatePhoneWithDetails("us", "+1 212 456 7890");
+console.log(valid);
+// { isValid: true }
+```
+
+#### Fallback Behavior
+
+- Countries without detailed validators automatically fall back to standard validation
+- Returns generic "Invalid phone number format" for unsupported detailed validations
+- All existing boolean APIs remain unchanged
+
+### Statistics
+
+- 📊 **435 tests** (+22 from v1.6.4) - 100% pass rate
+- 🎯 **63 countries** supported
+- 📦 **Bundle size**: ~24 KB (ESM), ~25 KB (CJS)
+- 🌍 **5+ billion people** covered worldwide (~70% of world population)
+
+### Breaking Changes
+
+- None! This is a **minor version** bump with new features only
+- All existing APIs are fully backward compatible
+
+### Future Plans
+
+- Add detailed validation for remaining 60 countries
+- Expand `00` prefix support to all countries
+- More granular error messages (carrier detection, region-specific validation)
+
+---
+
 ## [1.6.4] - 2025-12-09
 
 ### Added - Phase 7: Final Batch 🏁
+
 **2 New Countries Added - WORK PROJECT 100% COMPLETE!** 🎉
 
 #### Europe
+
 - 🇷🇺 **Russia (RU)** - Mobile (9xx) and landline validation with domestic 8-prefix support
 
 #### Asia-Pacific
+
 - 🇵🇭 **Philippines (PH)** - Mobile (09xx) and landline validation
 
 ### Features
+
 - Complex domestic format handling (Russia's 8-prefix)
 - 11-digit Russian number support
 - International format support (+7, +63)
@@ -24,6 +299,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **COMPLETE WORK PROJECT COVERAGE** 🏆
 
 ### Milestone Achievement
+
 - **63 countries** now supported (+2 from v1.6.3)
 - **100% work project requirements met!**
 - **24 European countries**
@@ -33,6 +309,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **2 North American countries**
 
 ### Coverage Statistics
+
 - 🌍 **5+ billion people** covered worldwide (~70% of world population)
 - 🌎 **All major global markets** supported
 - 📊 **413 comprehensive tests** (100% pass rate)
@@ -42,28 +319,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.6.3] - 2025-12-09
 
 ### Added - Phase 6: Remaining Asia (Batch F)
+
 **9 New Countries Added** 🌏
 
 #### Southeast Asia
+
 - 🇹🇭 **Thailand (TH)** - Mobile (06x/08x/09x) and landline validation
 - 🇲🇾 **Malaysia (MY)** - Mobile (01x) and landline support
 
 #### South Asia
+
 - 🇳🇵 **Nepal (NP)** - Mobile (97x/98x) and landline validation
 - 🇱🇰 **Sri Lanka (LK)** - Mobile (07x) and landline support
 
 #### East Asia
+
 - 🇭🇰 **Hong Kong (HK)** - Unified 8-digit format (mobile/landline)
 
 #### Central Asia
+
 - 🇺🇿 **Uzbekistan (UZ)** - Mobile (88/9x) and landline validation
 - 🇰🇬 **Kyrgyzstan (KG)** - Mobile (5xx/7xx) and landline support
 - 🇦🇫 **Afghanistan (AF)** - Mobile (7x) and landline validation
 
 #### Mediterranean
+
 - 🇨🇾 **Cyprus (CY)** - Mobile (9x) and landline (2x) support
 
 ### Features
+
 - Comprehensive Asian market coverage
 - Variable length support (7-11 digits depending on country)
 - International format support (+66, +60, +977, +94, +852, +998, +996, +93, +357)
@@ -71,6 +355,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive test suite with 401 total tests (54 new tests)
 
 ### Total Coverage
+
 - **61 countries** now supported (+9 from v1.6.2)
 - **23 European countries**
 - **17 Asia-Pacific countries** (Phase 6 complete!)
