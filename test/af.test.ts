@@ -26,6 +26,13 @@ describe("validateAF - Afghanistan phone numbers", () => {
     expect(validateAF("93 70 123 4567").isValid).toBe(true);
   });
 
+  test("should accept domestic format with leading 0", () => {
+    expect(validateAF("070 123 4567").isValid).toBe(true); // Mobile
+    expect(validateAF("020 1234567").isValid).toBe(true); // Kabul landline
+    expect(validateAF("030 1234567").isValid).toBe(true); // Kandahar landline
+    expect(validateAF("040 1234567").isValid).toBe(true); // Herat landline
+  });
+
   test("should reject phone numbers with incorrect length", () => {
     expect(validateAF("70 123 456").isValid).toBe(false);
     expect(validateAF("70 123 45678").isValid).toBe(false);

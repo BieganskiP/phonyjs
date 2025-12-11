@@ -5,19 +5,24 @@ import { ErrorCodes, getMessage } from "../errorCodes";
  * Validates Albanian phone numbers with detailed error messages.
  *
  * Rules:
- * - Mobile: 9 digits starting with 06x or 069
- * - Landline: 9 digits with area codes (e.g., 04-Tirana, 052-Durrës)
+ * - Format: +355 XX YYYYYYY (8-9 digits after country code, NSN length)
+ * - Domestic format: 0XX YYYYYYY (9-10 digits with leading 0)
  * - Handles international format (+355 prefix) and 00355 prefix
  *
- * Mobile prefixes: 066-069
- * Major area codes:
- * - 04: Tirana
- * - 052: Durrës
- * - 042: Shkodër
- * - 082: Vlorë
+ * Mobile prefixes: 67, 68, 69 (9 digits after country code)
+ *   - International: +355 69 1234567 (9 digits: 69 + 7 digits)
+ *   - Domestic: 069 1234567 (10 digits: 0 + 69 + 7 digits)
+ *
+ * Landline (Tirana): 4 (8 digits after country code)
+ *   - International: +355 4 1234567 (8 digits: 4 + 7 digits)
+ *   - Domestic: 04 1234567 (9 digits: 0 + 4 + 7 digits)
+ *
+ * Other landline area codes: 2-3 digits (8-9 digits after country code)
  *
  * @example
  * validateAL("069 123 4567") // { isValid: true }
+ * validateAL("04 1234567") // { isValid: true }
+ * validateAL("+355 69 123 4567") // { isValid: true }
  * validateAL("060 123 4567") // { isValid: false, errorCode: "INVALID_MOBILE_PREFIX", ... }
  */
 export const validateAL: PhoneValidator = (phone: string): ValidationResult => {
@@ -74,15 +79,18 @@ export const validateAL: PhoneValidator = (phone: string): ValidationResult => {
     return {
       isValid: false,
       errorCode: ErrorCodes.MISSING_LEADING_ZERO,
-      message: getMessage(ErrorCodes.MISSING_LEADING_ZERO, { country: "Albania" }),
+      message: getMessage(ErrorCodes.MISSING_LEADING_ZERO, {
+        country: "Albania",
+      }),
       details: { country: "Albania" },
     };
   }
 
-  // Mobile: 06[6-9] followed by 6-7 digits (9-10 total)
+  // Mobile: 06[7-9] followed by 7 digits (10 total in domestic format)
+  // Mobile prefixes: 67, 68, 69 (without leading 0)
   if (digits.startsWith("06")) {
     const mobilePrefix = digits.slice(0, 3);
-    const validMobilePrefixes = ["066", "067", "068", "069"];
+    const validMobilePrefixes = ["067", "068", "069"];
 
     if (!validMobilePrefixes.includes(mobilePrefix)) {
       return {
@@ -96,7 +104,21 @@ export const validateAL: PhoneValidator = (phone: string): ValidationResult => {
       };
     }
 
-    if (!/^06[6-9]\d{6,7}$/.test(digits)) {
+    // Mobile: exactly 10 digits (0 + 69 + 7 digits)
+    if (digits.length !== 10) {
+      return {
+        isValid: false,
+        errorCode:
+          digits.length < 10 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+        message: getMessage(
+          digits.length < 10 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+          { expected: 10, got: digits.length, type: "mobile" }
+        ),
+        details: { expected: 10, got: digits.length, type: "mobile" },
+      };
+    }
+
+    if (!/^06[7-9]\d{7}$/.test(digits)) {
       return {
         isValid: false,
         errorCode: ErrorCodes.INVALID_FORMAT,
@@ -145,11 +167,11 @@ export const validateAL: PhoneValidator = (phone: string): ValidationResult => {
     isValid: false,
     errorCode: ErrorCodes.INVALID_PREFIX,
     message: getMessage(ErrorCodes.INVALID_PREFIX, {
-      validPrefixes: ["66-69 (mobile)", "2-5, 7-9 (landline)"],
+      validPrefixes: ["67-69 (mobile)", "2-5, 7-9 (landline)"],
       country: "Albania",
     }),
     details: {
-      validPrefixes: ["66-69 (mobile)", "2-5, 7-9 (landline)"],
+      validPrefixes: ["67-69 (mobile)", "2-5, 7-9 (landline)"],
       country: "Albania",
     },
   };

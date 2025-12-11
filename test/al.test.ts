@@ -35,6 +35,7 @@ describe("validateAL - Albanian phone numbers", () => {
   test("should reject invalid mobile prefixes", () => {
     expect(validateAL("065 123 4567").isValid).toBe(false);
     expect(validateAL("060 123 4567").isValid).toBe(false);
+    expect(validateAL("066 123 4567").isValid).toBe(false); // 066 not valid
   });
 });
 

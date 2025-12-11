@@ -5,8 +5,8 @@ import { ErrorCodes, getMessage } from "../errorCodes";
  * Validates UAE (United Arab Emirates) phone numbers with detailed error messages.
  *
  * Rules:
- * - Mobile: 9 digits starting with 50, 52, 54, 55, 56, or 58
- * - Landline: 8-9 digits with area codes (2-Abu Dhabi, 3-Al Ain, 4-Dubai, 6-Sharjah, 7-RAK, 9-other)
+ * - Mobile: 10 digits starting with 050, 052, 054, 055, 056, or 058 (0 + mobile prefix + 7-digit local number)
+ * - Landline: 9 digits with area codes (02-Abu Dhabi, 03-Al Ain, 04-Dubai, 06-Sharjah/Ajman/UAQ, 07-Ras Al Khaimah, 09-Fujairah)
  * - Handles international format (+971 prefix) and 00971 prefix
  *
  * Mobile carriers:
@@ -15,6 +15,7 @@ import { ErrorCodes, getMessage } from "../errorCodes";
  *
  * @example
  * validateAE("050 123 4567") // { isValid: true }
+ * validateAE("04 123 4567") // { isValid: true }
  * validateAE("057 123 4567") // { isValid: false, errorCode: "INVALID_MOBILE_PREFIX", ... }
  */
 export const validateAE: PhoneValidator = (phone: string): ValidationResult => {
@@ -116,22 +117,22 @@ export const validateAE: PhoneValidator = (phone: string): ValidationResult => {
     return { isValid: true };
   }
 
-  // Landline: 0[2-4679] + 6-7 digits (8-9 total)
+  // Landline: 0[2-4679] + 7 digits (9 total)
   if (/^0[2-4679]/.test(digits)) {
-    if (digits.length < 8 || digits.length > 9) {
+    if (digits.length !== 9) {
       return {
         isValid: false,
         errorCode:
-          digits.length < 8 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+          digits.length < 9 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
         message: getMessage(
-          digits.length < 8 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
-          { expected: "8-9", got: digits.length, type: "landline" }
+          digits.length < 9 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+          { expected: 9, got: digits.length, type: "landline" }
         ),
-        details: { expected: "8-9", got: digits.length, type: "landline" },
+        details: { expected: 9, got: digits.length, type: "landline" },
       };
     }
 
-    if (!/^0[2-4679]\d{6,7}$/.test(digits)) {
+    if (!/^0[2-4679]\d{7}$/.test(digits)) {
       return {
         isValid: false,
         errorCode: ErrorCodes.INVALID_FORMAT,

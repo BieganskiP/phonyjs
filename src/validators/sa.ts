@@ -26,10 +26,16 @@ export const validateSA: PhoneValidator = (phone: string): ValidationResult => {
   let digits = phone.replace(/\D/g, "");
 
   // Handle international formats
-  if (digits.startsWith("00966") && digits.length >= 14) {
-    digits = "0" + digits.slice(5);
-  } else if (digits.startsWith("966") && digits.length >= 12) {
-    digits = "0" + digits.slice(3);
+  // Saudi numbers in international format don't include the leading 0
+  // So +966 512345678 should become 0512345678
+  if (digits.startsWith("00966") && digits.length >= 12) {
+    const remaining = digits.slice(5);
+    // If it already has leading 0 (incorrect but common), keep it; otherwise add it
+    digits = remaining.startsWith("0") ? remaining : "0" + remaining;
+  } else if (digits.startsWith("966") && digits.length >= 10) {
+    const remaining = digits.slice(3);
+    // If it already has leading 0 (incorrect but common), keep it; otherwise add it
+    digits = remaining.startsWith("0") ? remaining : "0" + remaining;
   }
 
   // Check length
