@@ -14,7 +14,7 @@
 ✅ **Detailed Error Messages** - Know exactly why validation failed  
 ✅ **i18n Support** - Custom messages in any language  
 ✅ **Error Codes** - Machine-readable validation results  
-✅ **63 Countries** - Comprehensive global coverage  
+✅ **92 Countries** - Comprehensive global coverage  
 ✅ **Type-safe** - Full TypeScript support  
 ✅ **Tree-shakeable** - Import only what you need  
 ✅ **Zero dependencies** - Lightweight and fast  
@@ -51,12 +51,12 @@ if (isValidPhone("us", "+1 212 456 7890")) {
 
 ## 🌍 Supported Countries
 
-**63 countries** covering 5+ billion people (~70% of world population)
+**92 countries** covering 5+ billion people (~70% of world population)
 
 <details>
 <summary><b>View all supported countries</b></summary>
 
-### Europe (24 countries) 🇪🇺
+### Europe (51 countries) 🇪🇺
 
 | Country              | Code | Example           |
 | -------------------- | ---- | ----------------- |
@@ -87,7 +87,7 @@ if (isValidPhone("us", "+1 212 456 7890")) {
 | Russia               | `ru` | `8 912 345 67 89` |
 | Cyprus               | `cy` | `96 123456`       |
 
-### Middle East (13 countries) 🕌
+### Middle East (16 countries) 🕌
 
 | Country      | Code | Example         |
 | ------------ | ---- | --------------- |
@@ -127,7 +127,7 @@ if (isValidPhone("us", "+1 212 456 7890")) {
 | Australia   | `au` | `04 1234 5678`   |
 | Maldives    | `mv` | `791 2345`       |
 
-### Africa (6 countries) 🌍
+### Africa (5 countries) 🌍
 
 | Country      | Code | Example        |
 | ------------ | ---- | -------------- |
@@ -206,7 +206,7 @@ Full type safety with autocomplete:
 ```typescript
 import { validatePhone, ValidationResult, AvailableCountryCode } from "phonyjs";
 
-// TypeScript autocompletes all 63 country codes
+// TypeScript autocompletes all 92 country codes
 const country: AvailableCountryCode = "us";
 
 // Result is fully typed
@@ -320,7 +320,7 @@ If you find this library helpful, consider [buying me a coffee](https://buycoffe
 
 ### ✅ Completed (v2.0.0)
 
-- [x] 63 countries with mobile & landline support
+- [x] 92 countries with mobile & landline support
 - [x] Detailed error messages with error codes
 - [x] Full TypeScript support
 - [x] Tree-shaking support
