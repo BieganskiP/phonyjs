@@ -1,6 +1,6 @@
 {
   "name": "phonyjs",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Type-safe phone number validation library with country-specific rules",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

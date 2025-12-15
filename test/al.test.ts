@@ -38,8 +38,3 @@ describe("validateAL - Albanian phone numbers", () => {
     expect(validateAL("066 123 4567").isValid).toBe(false); // 066 not valid
   });
 });
-
-
-
-
-

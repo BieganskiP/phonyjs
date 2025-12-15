@@ -62,6 +62,35 @@ import { validateAF } from "./af";
 import { validateCY } from "./cy";
 import { validateRU } from "./ru";
 import { validatePH } from "./ph";
+import { validatePT } from "./pt";
+import { validateSE } from "./se";
+import { validateNO } from "./no";
+import { validateUA } from "./ua";
+import { validateBG } from "./bg";
+import { validateSK } from "./sk";
+import { validateSI } from "./si";
+import { validateEE } from "./ee";
+import { validateLV } from "./lv";
+import { validateLT } from "./lt";
+import { validateLU } from "./lu";
+import { validateMT } from "./mt";
+import { validateIS } from "./is";
+import { validateRS } from "./rs";
+import { validateBY } from "./by";
+import { validateMD } from "./md";
+import { validateMK } from "./mk";
+import { validateAZ } from "./az";
+import { validateMC } from "./mc";
+import { validateLI } from "./li";
+import { validateSM } from "./sm";
+import { validateAD } from "./ad";
+import { validateVA } from "./va";
+import { validateXK } from "./xk";
+import { validateKZ } from "./kz";
+import { validateIR } from "./ir";
+import { validateIL } from "./il";
+import { validatePS } from "./ps";
+import { validateSY } from "./sy";
 import { validateGeneric } from "./generic";
 
 /**
@@ -143,6 +172,35 @@ export const validators = {
   cy: validateCY,
   ru: validateRU,
   ph: validatePH,
+  pt: validatePT,
+  se: validateSE,
+  no: validateNO,
+  ua: validateUA,
+  bg: validateBG,
+  sk: validateSK,
+  si: validateSI,
+  ee: validateEE,
+  lv: validateLV,
+  lt: validateLT,
+  lu: validateLU,
+  mt: validateMT,
+  is: validateIS,
+  rs: validateRS,
+  by: validateBY,
+  md: validateMD,
+  mk: validateMK,
+  az: validateAZ,
+  mc: validateMC,
+  li: validateLI,
+  sm: validateSM,
+  ad: validateAD,
+  va: validateVA,
+  xk: validateXK,
+  kz: validateKZ,
+  ir: validateIR,
+  il: validateIL,
+  ps: validatePS,
+  sy: validateSY,
 } satisfies Record<string, PhoneValidator>;
 
 /**
