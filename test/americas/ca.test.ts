@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { validateCA } from "../../src/validators/americas/ca";
+import { validateCA } from "../../src/validators/north-america/ca";
 
 describe("validateCA - Canadian phone numbers", () => {
   test("should accept valid Canadian phone numbers", () => {
@@ -44,8 +44,3 @@ describe("validateCA - Canadian phone numbers", () => {
     expect(validateCA("a161234567").isValid).toBe(false);
   });
 });
-
-
-
-
-

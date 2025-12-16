@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { validateUS } from "../../src/validators/americas/us";
+import { validateUS } from "../../src/validators/north-america/us";
 import { ErrorCodes } from "../../src/errorCodes";
 
 describe("validateUS - US phone numbers", () => {
