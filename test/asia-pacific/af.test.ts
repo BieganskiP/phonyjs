@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { validateAF } from "../src/validators/asia-pacific/af";
+import { validateAF } from "../../src/validators/asia-pacific/af";
 
 describe("validateAF - Afghanistan phone numbers", () => {
   test("should accept valid Afghanistan mobile numbers", () => {

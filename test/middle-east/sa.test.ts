@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest";
 import { validateSA } from "../../src/validators/middle-east/sa";
-import { ErrorCodes } from "../src/errorCodes";
+import { ErrorCodes } from "../../src/errorCodes";
 
 describe("validateSA - Saudi Arabian phone numbers", () => {
   test("should accept valid Saudi mobile numbers", () => {
@@ -58,7 +58,3 @@ describe("validateSA - Saudi Arabian phone numbers", () => {
     expect(result.errorCode).toBe(ErrorCodes.INVALID_CHARACTERS);
   });
 });
-
-
-
-

@@ -86,6 +86,24 @@ import { validateKG } from "./asia-pacific/kg";
 import { validateAF } from "./asia-pacific/af";
 import { validateAU } from "./asia-pacific/au";
 import { validateMV } from "./asia-pacific/mv";
+import { validateNZ } from "./asia-pacific/nz";
+import { validateVN } from "./asia-pacific/vn";
+import { validateBD } from "./asia-pacific/bd";
+import { validateTW } from "./asia-pacific/tw";
+import { validateFJ } from "./asia-pacific/fj";
+import { validateMM } from "./asia-pacific/mm";
+import { validateKH } from "./asia-pacific/kh";
+import { validateLA } from "./asia-pacific/la";
+import { validatePG } from "./asia-pacific/pg";
+import { validateBN } from "./asia-pacific/bn";
+import { validateMN } from "./asia-pacific/mn";
+import { validateMO } from "./asia-pacific/mo";
+import { validateBT } from "./asia-pacific/bt";
+import { validateTL } from "./asia-pacific/tl";
+import { validateWS } from "./asia-pacific/ws";
+import { validateTO } from "./asia-pacific/to";
+import { validateVU } from "./asia-pacific/vu";
+import { validateSB } from "./asia-pacific/sb";
 import { validateZA } from "./africa/za";
 import { validateKE } from "./africa/ke";
 import { validateUG } from "./africa/ug";
@@ -201,6 +219,24 @@ export const validators = {
   il: validateIL,
   ps: validatePS,
   sy: validateSY,
+  nz: validateNZ,
+  vn: validateVN,
+  bd: validateBD,
+  tw: validateTW,
+  fj: validateFJ,
+  mm: validateMM,
+  kh: validateKH,
+  la: validateLA,
+  pg: validatePG,
+  bn: validateBN,
+  mn: validateMN,
+  mo: validateMO,
+  bt: validateBT,
+  tl: validateTL,
+  ws: validateWS,
+  to: validateTO,
+  vu: validateVU,
+  sb: validateSB,
 } satisfies Record<string, PhoneValidator>;
 
 /**

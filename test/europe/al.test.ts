@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { validateAL } from "../src/validators/europe/al";
+import { validateAL } from "../../src/validators/europe/al";
 
 describe("validateAL - Albanian phone numbers", () => {
   test("should accept valid Albanian mobile numbers", () => {

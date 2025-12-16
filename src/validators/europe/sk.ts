@@ -16,7 +16,7 @@ import { ErrorCodes, getMessage } from "../../errorCodes";
  */
 export const validateSK: PhoneValidator = (phone: string): ValidationResult => {
   // Check for invalid characters first (allow / for Slovak format)
-  if (phone && !/^[0-9+\s\-().]+$/.test(phone)) {
+  if (phone && !/^[0-9+\s\-().\/]+$/.test(phone)) {
     return {
       isValid: false,
       errorCode: ErrorCodes.INVALID_CHARACTERS,
@@ -28,9 +28,9 @@ export const validateSK: PhoneValidator = (phone: string): ValidationResult => {
 
   // Handle international formats
   // "+421 2 123 456 78" = "421212345678" = 12 digits, remove "421" = "212345678" = 9 digits, add "0" = "0212345678" = 10 digits
-  if (digits.startsWith("00421") && digits.length >= 14) {
+  if (digits.startsWith("00421")) {
     digits = "0" + digits.slice(5);
-  } else if (digits.startsWith("421") && digits.length >= 12) {
+  } else if (digits.startsWith("421")) {
     const remaining = digits.slice(3);
     // If it already has leading 0, keep it; otherwise add it
     if (remaining.startsWith("0")) {

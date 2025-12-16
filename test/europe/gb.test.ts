@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest";
 import { validateGB } from "../../src/validators/europe/gb";
-import { ErrorCodes } from "../src/errorCodes";
+import { ErrorCodes } from "../../src/errorCodes";
 
 describe("validateGB - UK mobile phone numbers", () => {
   test("should accept valid UK mobile numbers", () => {
@@ -57,7 +57,3 @@ describe("validateGB - UK mobile phone numbers", () => {
     expect(result.errorCode).toBe(ErrorCodes.PERSONAL_NUMBER_PREFIX);
   });
 });
-
-
-
-
