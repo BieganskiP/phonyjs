@@ -111,4 +111,3 @@ export const validateTJ: PhoneValidator = (phone: string): ValidationResult => {
     },
   };
 };
-
