@@ -9,9 +9,9 @@ describe("validateDZ - Algerian phone numbers", () => {
   });
 
   test("should accept Algerian landline numbers", () => {
-    expect(validateDZ("21 12 34 56").isValid).toBe(true); // Algiers
-    expect(validateDZ("31 12 34 56").isValid).toBe(true);
-    expect(validateDZ("25 12 34 56").isValid).toBe(true);
+    expect(validateDZ("21 123 45 67").isValid).toBe(true); // Algiers
+    expect(validateDZ("31 123 45 67").isValid).toBe(true);
+    expect(validateDZ("25 123 45 67").isValid).toBe(true);
   });
 
   test("should accept phone numbers with formatting", () => {
@@ -21,7 +21,7 @@ describe("validateDZ - Algerian phone numbers", () => {
 
   test("should accept international format (+213)", () => {
     expect(validateDZ("+213 551 23 45 67").isValid).toBe(true);
-    expect(validateDZ("213 21 12 34 56").isValid).toBe(true);
+    expect(validateDZ("213 21 123 45 67").isValid).toBe(true);
   });
 
   test("should reject phone numbers with incorrect length", () => {

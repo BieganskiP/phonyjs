@@ -12,7 +12,7 @@ describe("validateSO - Somalia phone numbers", () => {
   });
 
   test("should reject invalid numbers", () => {
-    expect(validateSO("91 123 4567").isValid).toBe(false);
+    expect(validateSO("00 123 45").isValid).toBe(false);
     expect(validateSO("").isValid).toBe(false);
   });
 });

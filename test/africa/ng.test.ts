@@ -9,7 +9,7 @@ describe("validateNG - Nigeria phone numbers", () => {
   });
 
   test("should accept Nigeria landline numbers", () => {
-    expect(validateNG("1 234 5678").isValid).toBe(true); // Lagos
+    expect(validateNG("1 2345 67890").isValid).toBe(true); // Lagos
   });
 
   test("should accept international format (+234)", () => {

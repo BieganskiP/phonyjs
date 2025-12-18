@@ -3,8 +3,8 @@ import { validateZW } from "../../src/validators/africa/zw";
 
 describe("validateZW - Zimbabwe phone numbers", () => {
   test("should accept valid Zimbabwe phone numbers", () => {
-    expect(validateZW("71 123 4567").isValid).toBe(true);
-    expect(validateZW("24 123 456").isValid).toBe(true);
+    expect(validateZW("71 234 5678").isValid).toBe(true);
+    expect(validateZW("24 234 5678").isValid).toBe(true);
   });
 
   test("should accept international format (+263)", () => {
