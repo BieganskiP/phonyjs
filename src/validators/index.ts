@@ -52,6 +52,58 @@ import { validateXK } from "./europe/xk";
 import { validateKZ } from "./europe/kz";
 import { validateUS } from "./north-america/us";
 import { validateCA } from "./north-america/ca";
+import { validateMX } from "./north-america/mx";
+import { validateGT } from "./north-america/gt";
+import { validateCR } from "./north-america/cr";
+import { validateBZ } from "./north-america/bz";
+import { validateHN } from "./north-america/hn";
+import { validateNI } from "./north-america/ni";
+import { validatePA } from "./north-america/pa";
+import { validateSV } from "./north-america/sv";
+import { validateJM } from "./north-america/jm";
+import { validateBS } from "./north-america/bs";
+import { validateDO } from "./north-america/do";
+import { validateTT } from "./north-america/tt";
+import { validateBB } from "./north-america/bb";
+import { validateHT } from "./north-america/ht";
+import { validateCU } from "./north-america/cu";
+import { validateAG } from "./north-america/ag";
+import { validateLC } from "./north-america/lc";
+import { validateVC } from "./north-america/vc";
+import { validateGD } from "./north-america/gd";
+import { validateKN } from "./north-america/kn";
+import { validateDM } from "./north-america/dm";
+import { validatePR } from "./north-america/pr";
+import { validateVI } from "./north-america/vi";
+import { validateKY } from "./north-america/ky";
+import { validateTC } from "./north-america/tc";
+import { validateVG } from "./north-america/vg";
+import { validateBM } from "./north-america/bm";
+import { validateAI } from "./north-america/ai";
+import { validateMS } from "./north-america/ms";
+import { validatePM } from "./north-america/pm";
+import { validateGL } from "./north-america/gl";
+import { validateGP } from "./north-america/gp";
+import { validateMQ } from "./north-america/mq";
+import { validateBL } from "./north-america/bl";
+import { validateMF } from "./north-america/mf";
+import { validateSaba } from "./north-america/saba";
+import { validateSintEustatius } from "./north-america/sint-eustatius";
+import { validateSX } from "./north-america/sx";
+import { validateBR } from "./south-america/br";
+import { validateAR } from "./south-america/ar";
+import { validateCL } from "./south-america/cl";
+import { validateCO } from "./south-america/co";
+import { validatePE } from "./south-america/pe";
+import { validateVE } from "./south-america/ve";
+import { validateBO } from "./south-america/bo";
+import { validateEC } from "./south-america/ec";
+import { validateGY } from "./south-america/gy";
+import { validatePY } from "./south-america/py";
+import { validateSR } from "./south-america/sr";
+import { validateUY } from "./south-america/uy";
+import { validateGF } from "./south-america/gf";
+import { validateFK } from "./south-america/fk";
 import { validateSA } from "./asia/sa";
 import { validateAE } from "./asia/ae";
 import { validateEG } from "./asia/eg";
@@ -135,6 +187,58 @@ export const validators = {
   de: validateDE,
   in: validateIN,
   ca: validateCA,
+  mx: validateMX,
+  gt: validateGT,
+  cr: validateCR,
+  bz: validateBZ,
+  hn: validateHN,
+  ni: validateNI,
+  pa: validatePA,
+  sv: validateSV,
+  jm: validateJM,
+  bs: validateBS,
+  do: validateDO,
+  tt: validateTT,
+  bb: validateBB,
+  ht: validateHT,
+  cu: validateCU,
+  ag: validateAG,
+  lc: validateLC,
+  vc: validateVC,
+  gd: validateGD,
+  kn: validateKN,
+  dm: validateDM,
+  pr: validatePR,
+  vi: validateVI,
+  ky: validateKY,
+  tc: validateTC,
+  vg: validateVG,
+  bm: validateBM,
+  ai: validateAI,
+  ms: validateMS,
+  pm: validatePM,
+  gl: validateGL,
+  gp: validateGP,
+  mq: validateMQ,
+  bl: validateBL,
+  mf: validateMF,
+  saba: validateSaba,
+  sintEustatius: validateSintEustatius,
+  sx: validateSX,
+  br: validateBR,
+  ar: validateAR,
+  cl: validateCL,
+  co: validateCO,
+  pe: validatePE,
+  ve: validateVE,
+  bo: validateBO,
+  ec: validateEC,
+  gy: validateGY,
+  py: validatePY,
+  sr: validateSR,
+  uy: validateUY,
+  gf: validateGF,
+  fk: validateFK,
   au: validateAU,
   ae: validateAE,
   eg: validateEG,
