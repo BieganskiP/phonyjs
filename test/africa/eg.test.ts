@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { validateEG } from "../../src/validators/asia/eg";
+import { validateEG } from "../../src/validators/africa/eg";
 
 describe("validateEG - Egyptian phone numbers", () => {
   test("should accept valid Egyptian mobile numbers", () => {
@@ -43,8 +43,4 @@ describe("validateEG - Egyptian phone numbers", () => {
     expect(validateEG("1012345678").isValid).toBe(false); // missing leading 0
   });
 });
-
-
-
-
 

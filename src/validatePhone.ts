@@ -89,7 +89,6 @@ export function isValidPhone(
 }
 
 /**
- * @deprecated Use validatePhone() instead. This function is kept for backward compatibility.
  * Validates with fallback to generic validator for unsupported countries.
  */
 export function validatePhoneWithFallback(

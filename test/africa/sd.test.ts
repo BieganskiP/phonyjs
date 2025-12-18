@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { validateSD } from "../../src/validators/asia/sd";
+import { validateSD } from "../../src/validators/africa/sd";
 
 describe("validateSD - Sudanese phone numbers", () => {
   test("should accept valid Sudanese mobile numbers", () => {
@@ -39,8 +39,4 @@ describe("validateSD - Sudanese phone numbers", () => {
     expect(validateSD("91 234 5678").isValid).toBe(true); // valid mobile without 0
   });
 });
-
-
-
-
 

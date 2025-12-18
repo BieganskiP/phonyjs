@@ -14,13 +14,13 @@
 ✅ **Detailed Error Messages** - Know exactly why validation failed  
 ✅ **i18n Support** - Custom messages in any language  
 ✅ **Error Codes** - Machine-readable validation results  
-✅ **92 Countries** - Comprehensive global coverage  
+✅ **165 Countries** - Comprehensive global coverage  
 ✅ **Type-safe** - Full TypeScript support  
 ✅ **Tree-shakeable** - Import only what you need  
 ✅ **Zero dependencies** - Lightweight and fast  
 ✅ **Mobile & Landline** - Both formats supported  
 ✅ **International formats** - Handles +XX and 00XX prefixes  
-✅ **Production-ready** - 411 tests, 100% pass rate
+✅ **Production-ready** - Extensive test coverage
 
 ## 📦 Installation
 
@@ -51,7 +51,7 @@ if (isValidPhone("us", "+1 212 456 7890")) {
 
 ## 🌍 Supported Countries
 
-**92 countries** covering 5+ billion people (~70% of world population)
+**165 countries** covering 6+ billion people (~80% of world population)
 
 <details>
 <summary><b>View all supported countries</b></summary>
@@ -87,13 +87,12 @@ if (isValidPhone("us", "+1 212 456 7890")) {
 | Russia               | `ru` | `8 912 345 67 89` |
 | Cyprus               | `cy` | `96 123456`       |
 
-### Middle East (16 countries) 🕌
+### Middle East & West Asia (16 countries) 🕌
 
 | Country      | Code | Example         |
 | ------------ | ---- | --------------- |
 | Saudi Arabia | `sa` | `050 123 4567`  |
 | UAE          | `ae` | `050 123 4567`  |
-| Egypt        | `eg` | `010 1234 5678` |
 | Qatar        | `qa` | `3312 3456`     |
 | Kuwait       | `kw` | `9123 4567`     |
 | Bahrain      | `bh` | `3600 1234`     |
@@ -102,40 +101,122 @@ if (isValidPhone("us", "+1 212 456 7890")) {
 | Yemen        | `ye` | `71 123 4567`   |
 | Lebanon      | `lb` | `03 123 456`    |
 | Iraq         | `iq` | `0750 123 4567` |
-| Sudan        | `sd` | `091 234 5678`  |
+| Iran         | `ir` | `0912 345 6789` |
+| Israel       | `il` | `050 123 4567`  |
+| Palestine    | `ps` | `0599 123 456`  |
+| Syria        | `sy` | `0944 567 890`  |
+| Afghanistan  | `af` | `70 123 4567`   |
+| Pakistan     | `pk` | `0300 1234567`  |
 
-### Asia-Pacific (18 countries) 🌏
+### Asia (29 countries) 🌏
 
-| Country     | Code | Example          |
-| ----------- | ---- | ---------------- |
-| India       | `in` | `98765 43210`    |
-| Pakistan    | `pk` | `0300 1234567`   |
-| China       | `cn` | `138 0013 8000`  |
-| Japan       | `jp` | `090 1234 5678`  |
-| South Korea | `kr` | `010 1234 5678`  |
-| Indonesia   | `id` | `0812 3456 7890` |
-| Philippines | `ph` | `0917 123 4567`  |
-| Thailand    | `th` | `081 234 5678`   |
-| Malaysia    | `my` | `012 345 6789`   |
-| Singapore   | `sg` | `8123 4567`      |
-| Hong Kong   | `hk` | `9123 4567`      |
-| Nepal       | `np` | `9841 234 567`   |
-| Sri Lanka   | `lk` | `071 234 5678`   |
-| Uzbekistan  | `uz` | `90 123 45 67`   |
-| Kyrgyzstan  | `kg` | `555 123 456`    |
-| Afghanistan | `af` | `70 123 4567`    |
-| Australia   | `au` | `04 1234 5678`   |
-| Maldives    | `mv` | `791 2345`       |
+| Country      | Code | Example          |
+| ------------ | ---- | ---------------- |
+| Bangladesh   | `bd` | `01812 345678`   |
+| Bhutan       | `bt` | `17 123 456`     |
+| Brunei       | `bn` | `712 3456`       |
+| Cambodia     | `kh` | `012 345 678`    |
+| China        | `cn` | `138 0013 8000`  |
+| Hong Kong    | `hk` | `9123 4567`      |
+| India        | `in` | `98765 43210`    |
+| Indonesia    | `id` | `0812 3456 7890` |
+| Japan        | `jp` | `090 1234 5678`  |
+| Kyrgyzstan   | `kg` | `555 123 456`    |
+| Laos         | `la` | `020 2345 6789`  |
+| Macau        | `mo` | `6612 3456`      |
+| Malaysia     | `my` | `012 345 6789`   |
+| Maldives     | `mv` | `791 2345`       |
+| Mongolia     | `mn` | `8812 3456`      |
+| Myanmar      | `mm` | `09 123 456 789` |
+| Nepal        | `np` | `9841 234 567`   |
+| North Korea  | `kp` | `191 234 5678`   |
+| Philippines  | `ph` | `0917 123 4567`  |
+| Singapore    | `sg` | `8123 4567`      |
+| South Korea  | `kr` | `010 1234 5678`  |
+| Sri Lanka    | `lk` | `071 234 5678`   |
+| Taiwan       | `tw` | `0912 345 678`   |
+| Tajikistan   | `tj` | `90 123 45 67`   |
+| Thailand     | `th` | `081 234 5678`   |
+| Timor-Leste  | `tl` | `7721 2345`      |
+| Turkmenistan | `tm` | `61 123 456`     |
+| Uzbekistan   | `uz` | `90 123 45 67`   |
+| Vietnam      | `vn` | `091 234 56 78`  |
 
-### Africa (5 countries) 🌍
+### Oceania (14 countries) 🌊
 
-| Country      | Code | Example        |
-| ------------ | ---- | -------------- |
-| South Africa | `za` | `072 123 4567` |
-| Kenya        | `ke` | `0712 345 678` |
-| Uganda       | `ug` | `0712 345 678` |
-| Senegal      | `sn` | `77 123 45 67` |
-| Angola       | `ao` | `923 123 456`  |
+| Country          | Code | Example        |
+| ---------------- | ---- | -------------- |
+| Australia        | `au` | `04 1234 5678` |
+| Fiji             | `fj` | `701 2345`     |
+| Kiribati         | `ki` | `7212 3456`    |
+| Marshall Islands | `mh` | `247 1234`     |
+| Micronesia       | `fm` | `320 1234`     |
+| Nauru            | `nr` | `555 1234`     |
+| New Zealand      | `nz` | `021 123 4567` |
+| Palau            | `pw` | `775 1234`     |
+| Papua New Guinea | `pg` | `7012 3456`    |
+| Samoa            | `ws` | `7212 345`     |
+| Solomon Islands  | `sb` | `7421 234`     |
+| Tonga            | `to` | `771 2345`     |
+| Tuvalu           | `tv` | `901234`       |
+| Vanuatu          | `vu` | `591 2345`     |
+
+### Africa (53 countries) 🌍
+
+| Country                  | Code | Example          |
+| ------------------------ | ---- | ---------------- |
+| Algeria                  | `dz` | `551 23 45 67`   |
+| Angola                   | `ao` | `923 123 456`    |
+| Benin                    | `bj` | `97 12 34 56`    |
+| Botswana                 | `bw` | `71 234 567`     |
+| Burkina Faso             | `bf` | `70 12 34 56`    |
+| Cameroon                 | `cm` | `6 71 23 45 67`  |
+| Cape Verde               | `cv` | `991 23 45`      |
+| Central African Republic | `cf` | `70 12 34 56`    |
+| Chad                     | `td` | `66 12 34 56`    |
+| Comoros                  | `km` | `321 23 45`      |
+| Congo (DRC)              | `cd` | `81 123 45 67`   |
+| Congo (Republic)         | `cg` | `06 123 45 67`   |
+| Djibouti                 | `dj` | `77 12 34 56`    |
+| Egypt                    | `eg` | `010 1234 5678`  |
+| Equatorial Guinea        | `gq` | `222 123 456`    |
+| Eritrea                  | `er` | `7 123 456`      |
+| Ethiopia                 | `et` | `91 123 4567`    |
+| Gabon                    | `ga` | `07 12 34 56`    |
+| Gambia                   | `gm` | `991 23 45`      |
+| Ghana                    | `gh` | `24 123 4567`    |
+| Guinea                   | `gn` | `621 12 34 56`   |
+| Guinea-Bissau            | `gw` | `955 12 34`      |
+| Ivory Coast              | `ci` | `01 23 45 67 89` |
+| Kenya                    | `ke` | `0712 345 678`   |
+| Lesotho                  | `ls` | `5012 3456`      |
+| Liberia                  | `lr` | `77 123 456`     |
+| Libya                    | `ly` | `91 234 5678`    |
+| Madagascar               | `mg` | `32 12 345 67`   |
+| Malawi                   | `mw` | `991 23 45 67`   |
+| Mali                     | `ml` | `70 12 34 56`    |
+| Mauritania               | `mr` | `22 12 34 56`    |
+| Mauritius                | `mu` | `5 123 4567`     |
+| Morocco                  | `ma` | `612 34 56 78`   |
+| Mozambique               | `mz` | `84 123 4567`    |
+| Namibia                  | `na` | `81 123 4567`    |
+| Niger                    | `ne` | `90 12 34 56`    |
+| Nigeria                  | `ng` | `803 123 4567`   |
+| Rwanda                   | `rw` | `78 123 4567`    |
+| São Tomé and Príncipe    | `st` | `991 23 45`      |
+| Senegal                  | `sn` | `77 123 45 67`   |
+| Seychelles               | `sc` | `2 512 345`      |
+| Sierra Leone             | `sl` | `76 123 456`     |
+| Somalia                  | `so` | `61 234 567`     |
+| South Africa             | `za` | `072 123 4567`   |
+| South Sudan              | `ss` | `92 123 4567`    |
+| Sudan                    | `sd` | `091 234 5678`   |
+| Tanzania                 | `tz` | `71 234 5678`    |
+| Togo                     | `tg` | `90 12 34 56`    |
+| Tunisia                  | `tn` | `20 123 456`     |
+| Uganda                   | `ug` | `0712 345 678`   |
+| Zambia                   | `zm` | `97 123 4567`    |
+| Zimbabwe                 | `zw` | `71 234 5678`    |
 
 ### Americas (2 countries) 🌎
 
@@ -206,7 +287,7 @@ Full type safety with autocomplete:
 ```typescript
 import { validatePhone, ValidationResult, AvailableCountryCode } from "phonyjs";
 
-// TypeScript autocompletes all 92 country codes
+// TypeScript autocompletes all 165 country codes
 const country: AvailableCountryCode = "us";
 
 // Result is fully typed
@@ -318,22 +399,23 @@ If you find this library helpful, consider [buying me a coffee](https://buycoffe
 
 ## 🗺️ Roadmap
 
-### ✅ Completed (v2.0.0)
+### ✅ Completed
 
-- [x] 92 countries with mobile & landline support
+- [x] 165 countries with mobile & landline support
+- [x] Complete coverage: Europe (51), Middle East (16), Asia (29), Oceania (14), Africa (53), Americas (2)
 - [x] Detailed error messages with error codes
 - [x] Full TypeScript support
 - [x] Tree-shaking support
-- [x] `00` prefix support (GB, US, SA)
+- [x] International format support (+XX and 00XX prefixes)
 - [x] Zero dependencies
-- [x] 411 comprehensive tests
+- [x] Comprehensive test coverage
 
 ### 🚀 Planned Features
 
 #### Expand Coverage
 
-- [ ] Add remaining countries to achieve **global coverage** (190+ countries)
-- [ ] Expand `00` prefix support to all countries
+- [ ] Add Central and South America countries
+- [ ] Add Caribbean countries
 - [ ] Region-specific validation (states, provinces)
 
 #### Enhanced Features

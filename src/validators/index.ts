@@ -106,7 +106,6 @@ import { validateGF } from "./south-america/gf";
 import { validateFK } from "./south-america/fk";
 import { validateSA } from "./asia/sa";
 import { validateAE } from "./asia/ae";
-import { validateEG } from "./asia/eg";
 import { validateQA } from "./asia/qa";
 import { validateKW } from "./asia/kw";
 import { validateBH } from "./asia/bh";
@@ -115,11 +114,13 @@ import { validateJO } from "./asia/jo";
 import { validateYE } from "./asia/ye";
 import { validateLB } from "./asia/lb";
 import { validateIQ } from "./asia/iq";
-import { validateSD } from "./asia/sd";
 import { validateIR } from "./asia/ir";
 import { validateIL } from "./asia/il";
 import { validatePS } from "./asia/ps";
 import { validateSY } from "./asia/sy";
+import { validateKP } from "./asia/kp";
+import { validateTJ } from "./asia/tj";
+import { validateTM } from "./asia/tm";
 import { validateIN } from "./asia/in";
 import { validatePK } from "./asia/pk";
 import { validateCN } from "./asia/cn";
@@ -156,11 +157,64 @@ import { validateSB } from "./oceania/sb";
 import { validateTO } from "./oceania/to";
 import { validateVU } from "./oceania/vu";
 import { validateWS } from "./oceania/ws";
+import { validateKI } from "./oceania/ki";
+import { validateMH } from "./oceania/mh";
+import { validateFM } from "./oceania/fm";
+import { validateNR } from "./oceania/nr";
+import { validatePW } from "./oceania/pw";
+import { validateTV } from "./oceania/tv";
 import { validateZA } from "./africa/za";
 import { validateKE } from "./africa/ke";
 import { validateUG } from "./africa/ug";
 import { validateSN } from "./africa/sn";
 import { validateAO } from "./africa/ao";
+import { validateEG } from "./africa/eg";
+import { validateSD } from "./africa/sd";
+import { validateDZ } from "./africa/dz";
+import { validateLY } from "./africa/ly";
+import { validateMA } from "./africa/ma";
+import { validateTN } from "./africa/tn";
+import { validateBJ } from "./africa/bj";
+import { validateBF } from "./africa/bf";
+import { validateCV } from "./africa/cv";
+import { validateCI } from "./africa/ci";
+import { validateGM } from "./africa/gm";
+import { validateGH } from "./africa/gh";
+import { validateGN } from "./africa/gn";
+import { validateGW } from "./africa/gw";
+import { validateLR } from "./africa/lr";
+import { validateML } from "./africa/ml";
+import { validateMR } from "./africa/mr";
+import { validateNE } from "./africa/ne";
+import { validateNG } from "./africa/ng";
+import { validateSL } from "./africa/sl";
+import { validateTG } from "./africa/tg";
+import { validateCM } from "./africa/cm";
+import { validateCF } from "./africa/cf";
+import { validateTD } from "./africa/td";
+import { validateCG } from "./africa/cg";
+import { validateCD } from "./africa/cd";
+import { validateGQ } from "./africa/gq";
+import { validateGA } from "./africa/ga";
+import { validateST } from "./africa/st";
+import { validateKM } from "./africa/km";
+import { validateDJ } from "./africa/dj";
+import { validateER } from "./africa/er";
+import { validateET } from "./africa/et";
+import { validateMG } from "./africa/mg";
+import { validateMU } from "./africa/mu";
+import { validateRW } from "./africa/rw";
+import { validateSC } from "./africa/sc";
+import { validateSO } from "./africa/so";
+import { validateSS } from "./africa/ss";
+import { validateTZ } from "./africa/tz";
+import { validateBW } from "./africa/bw";
+import { validateLS } from "./africa/ls";
+import { validateMW } from "./africa/mw";
+import { validateMZ } from "./africa/mz";
+import { validateNA } from "./africa/na";
+import { validateZM } from "./africa/zm";
+import { validateZW } from "./africa/zw";
 import { validateGeneric } from "./generic";
 
 /**
@@ -241,7 +295,6 @@ export const validators = {
   fk: validateFK,
   au: validateAU,
   ae: validateAE,
-  eg: validateEG,
   es: validateES,
   it: validateIT,
   nl: validateNL,
@@ -253,7 +306,6 @@ export const validators = {
   tr: validateTR,
   pk: validatePK,
   gr: validateGR,
-  sd: validateSD,
   om: validateOM,
   qa: validateQA,
   kw: validateKW,
@@ -282,6 +334,53 @@ export const validators = {
   sn: validateSN,
   ao: validateAO,
   za: validateZA,
+  eg: validateEG,
+  sd: validateSD,
+  dz: validateDZ,
+  ly: validateLY,
+  ma: validateMA,
+  tn: validateTN,
+  bj: validateBJ,
+  bf: validateBF,
+  cv: validateCV,
+  ci: validateCI,
+  gm: validateGM,
+  gh: validateGH,
+  gn: validateGN,
+  gw: validateGW,
+  lr: validateLR,
+  ml: validateML,
+  mr: validateMR,
+  ne: validateNE,
+  ng: validateNG,
+  sl: validateSL,
+  tg: validateTG,
+  cm: validateCM,
+  cf: validateCF,
+  td: validateTD,
+  cg: validateCG,
+  cd: validateCD,
+  gq: validateGQ,
+  ga: validateGA,
+  st: validateST,
+  km: validateKM,
+  dj: validateDJ,
+  er: validateER,
+  et: validateET,
+  mg: validateMG,
+  mu: validateMU,
+  rw: validateRW,
+  sc: validateSC,
+  so: validateSO,
+  ss: validateSS,
+  tz: validateTZ,
+  bw: validateBW,
+  ls: validateLS,
+  mw: validateMW,
+  mz: validateMZ,
+  na: validateNA,
+  zm: validateZM,
+  zw: validateZW,
   mv: validateMV,
   th: validateTH,
   my: validateMY,
@@ -341,6 +440,15 @@ export const validators = {
   to: validateTO,
   vu: validateVU,
   sb: validateSB,
+  kp: validateKP,
+  tj: validateTJ,
+  tm: validateTM,
+  ki: validateKI,
+  mh: validateMH,
+  fm: validateFM,
+  nr: validateNR,
+  pw: validatePW,
+  tv: validateTV,
 } satisfies Record<string, PhoneValidator>;
 
 /**
