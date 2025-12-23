@@ -29,41 +29,59 @@ export const validateAE: PhoneValidator = (phone: string): ValidationResult => {
   }
 
   let digits = phone.replace(/\D/g, "");
+  let hasCountryCode = false;
 
   // Handle international formats
+  // UAE numbers in international format don't include the leading 0
+  // So +971 501234567 should be accepted as 501234567 (9 digits)
+  // But local format 0501234567 should still be accepted (10 digits with leading 0)
   if (digits.startsWith("00971") && digits.length >= 13) {
-    digits = "0" + digits.slice(5);
+    digits = digits.slice(5);
+    hasCountryCode = true;
+    // Remove leading 0 if present (some people incorrectly include it)
+    if (digits.startsWith("0")) {
+      digits = digits.slice(1);
+    }
   } else if (digits.startsWith("971") && digits.length >= 11) {
-    digits = "0" + digits.slice(3);
+    digits = digits.slice(3);
+    hasCountryCode = true;
+    // Remove leading 0 if present (some people incorrectly include it)
+    if (digits.startsWith("0")) {
+      digits = digits.slice(1);
+    }
   }
 
-  // Check length (9-10 digits)
-  if (digits.length < 9) {
+  // Check length
+  // With country code: 9 digits (mobile) or 8 digits (landline) without leading 0
+  // Without country code: 10 digits (mobile) or 9 digits (landline) with leading 0
+  const minLength = hasCountryCode ? 8 : 9;
+  const maxLength = hasCountryCode ? 9 : 10;
+  if (digits.length < minLength) {
     return {
       isValid: false,
       errorCode: ErrorCodes.TOO_SHORT,
       message: getMessage(ErrorCodes.TOO_SHORT, {
-        expected: "9-10",
+        expected: hasCountryCode ? "8-9" : "9-10",
         got: digits.length,
       }),
-      details: { expected: "9-10", got: digits.length },
+      details: { expected: hasCountryCode ? "8-9" : "9-10", got: digits.length },
     };
   }
 
-  if (digits.length > 10) {
+  if (digits.length > maxLength) {
     return {
       isValid: false,
       errorCode: ErrorCodes.TOO_LONG,
       message: getMessage(ErrorCodes.TOO_LONG, {
-        expected: "9-10",
+        expected: hasCountryCode ? "8-9" : "9-10",
         got: digits.length,
       }),
-      details: { expected: "9-10", got: digits.length },
+      details: { expected: hasCountryCode ? "8-9" : "9-10", got: digits.length },
     };
   }
 
-  // Must start with 0
-  if (!digits.startsWith("0")) {
+  // If no country code, must start with 0
+  if (!hasCountryCode && !digits.startsWith("0")) {
     return {
       isValid: false,
       errorCode: ErrorCodes.MISSING_LEADING_ZERO,
@@ -72,106 +90,179 @@ export const validateAE: PhoneValidator = (phone: string): ValidationResult => {
     };
   }
 
-  // Mobile: 05[024568] + 7 digits (10 total)
-  if (digits.startsWith("05")) {
-    if (digits.length !== 10) {
-      return {
-        isValid: false,
-        errorCode:
-          digits.length < 10 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
-        message: getMessage(
-          digits.length < 10 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
-          { expected: 10, got: digits.length, type: "mobile" }
-        ),
-        details: { expected: 10, got: digits.length, type: "mobile" },
-      };
+  // Mobile validation
+  if (hasCountryCode) {
+    // With country code: 9 digits starting with 5
+    if (digits.startsWith("5") && digits.length === 9) {
+      const mobilePrefix = digits.slice(0, 2);
+      const validMobilePrefixes = ["50", "52", "54", "55", "56", "58"];
+
+      if (!validMobilePrefixes.includes(mobilePrefix)) {
+        return {
+          isValid: false,
+          errorCode: ErrorCodes.INVALID_MOBILE_PREFIX,
+          message: getMessage(ErrorCodes.INVALID_MOBILE_PREFIX, {
+            validPrefixes: validMobilePrefixes.map((p) => "5" + p[1]),
+            got: mobilePrefix,
+          }),
+          details: { validPrefixes: validMobilePrefixes.map((p) => "5" + p[1]), got: mobilePrefix },
+        };
+      }
+
+      if (!/^5[024568]\d{7}$/.test(digits)) {
+        return {
+          isValid: false,
+          errorCode: ErrorCodes.INVALID_FORMAT,
+          message: getMessage(ErrorCodes.INVALID_FORMAT, {
+            country: "UAE",
+            type: "mobile",
+          }),
+          details: { country: "UAE", type: "mobile" },
+        };
+      }
+
+      return { isValid: true };
     }
 
-    const mobilePrefix = digits.slice(0, 3);
-    const validMobilePrefixes = ["050", "052", "054", "055", "056", "058"];
+    // Landline with country code: 8 digits starting with 2, 3, 4, 6, 7, or 9
+    if (/^[2-4679]/.test(digits) && digits.length === 8) {
+      if (!/^[2-4679]\d{7}$/.test(digits)) {
+        return {
+          isValid: false,
+          errorCode: ErrorCodes.INVALID_FORMAT,
+          message: getMessage(ErrorCodes.INVALID_FORMAT, {
+            country: "UAE",
+            type: "landline",
+          }),
+          details: { country: "UAE", type: "landline" },
+        };
+      }
 
-    if (!validMobilePrefixes.includes(mobilePrefix)) {
-      return {
-        isValid: false,
-        errorCode: ErrorCodes.INVALID_MOBILE_PREFIX,
-        message: getMessage(ErrorCodes.INVALID_MOBILE_PREFIX, {
-          validPrefixes: validMobilePrefixes,
-          got: mobilePrefix,
-        }),
-        details: { validPrefixes: validMobilePrefixes, got: mobilePrefix },
-      };
+      return { isValid: true };
+    }
+  } else {
+    // Local format: 9-10 digits with leading 0
+    // Mobile: 05[024568] + 7 digits (10 total)
+    if (digits.startsWith("05")) {
+      if (digits.length !== 10) {
+        return {
+          isValid: false,
+          errorCode:
+            digits.length < 10 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+          message: getMessage(
+            digits.length < 10 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+            { expected: 10, got: digits.length, type: "mobile" }
+          ),
+          details: { expected: 10, got: digits.length, type: "mobile" },
+        };
+      }
+
+      const mobilePrefix = digits.slice(0, 3);
+      const validMobilePrefixes = ["050", "052", "054", "055", "056", "058"];
+
+      if (!validMobilePrefixes.includes(mobilePrefix)) {
+        return {
+          isValid: false,
+          errorCode: ErrorCodes.INVALID_MOBILE_PREFIX,
+          message: getMessage(ErrorCodes.INVALID_MOBILE_PREFIX, {
+            validPrefixes: validMobilePrefixes,
+            got: mobilePrefix,
+          }),
+          details: { validPrefixes: validMobilePrefixes, got: mobilePrefix },
+        };
+      }
+
+      if (!/^05[024568]\d{7}$/.test(digits)) {
+        return {
+          isValid: false,
+          errorCode: ErrorCodes.INVALID_FORMAT,
+          message: getMessage(ErrorCodes.INVALID_FORMAT, {
+            country: "UAE",
+            type: "mobile",
+          }),
+          details: { country: "UAE", type: "mobile" },
+        };
+      }
+
+      return { isValid: true };
     }
 
-    if (!/^05[024568]\d{7}$/.test(digits)) {
-      return {
-        isValid: false,
-        errorCode: ErrorCodes.INVALID_FORMAT,
-        message: getMessage(ErrorCodes.INVALID_FORMAT, {
-          country: "UAE",
-          type: "mobile",
-        }),
-        details: { country: "UAE", type: "mobile" },
-      };
+    // Landline: 0[2-4679] + 7 digits (9 total)
+    if (/^0[2-4679]/.test(digits)) {
+      if (digits.length !== 9) {
+        return {
+          isValid: false,
+          errorCode:
+            digits.length < 9 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+          message: getMessage(
+            digits.length < 9 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
+            { expected: 9, got: digits.length, type: "landline" }
+          ),
+          details: { expected: 9, got: digits.length, type: "landline" },
+        };
+      }
+
+      if (!/^0[2-4679]\d{7}$/.test(digits)) {
+        return {
+          isValid: false,
+          errorCode: ErrorCodes.INVALID_FORMAT,
+          message: getMessage(ErrorCodes.INVALID_FORMAT, {
+            country: "UAE",
+            type: "landline",
+          }),
+          details: { country: "UAE", type: "landline" },
+        };
+      }
+
+      return { isValid: true };
     }
-
-    return { isValid: true };
-  }
-
-  // Landline: 0[2-4679] + 7 digits (9 total)
-  if (/^0[2-4679]/.test(digits)) {
-    if (digits.length !== 9) {
-      return {
-        isValid: false,
-        errorCode:
-          digits.length < 9 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
-        message: getMessage(
-          digits.length < 9 ? ErrorCodes.TOO_SHORT : ErrorCodes.TOO_LONG,
-          { expected: 9, got: digits.length, type: "landline" }
-        ),
-        details: { expected: 9, got: digits.length, type: "landline" },
-      };
-    }
-
-    if (!/^0[2-4679]\d{7}$/.test(digits)) {
-      return {
-        isValid: false,
-        errorCode: ErrorCodes.INVALID_FORMAT,
-        message: getMessage(ErrorCodes.INVALID_FORMAT, {
-          country: "UAE",
-          type: "landline",
-        }),
-        details: { country: "UAE", type: "landline" },
-      };
-    }
-
-    return { isValid: true };
   }
 
   return {
     isValid: false,
     errorCode: ErrorCodes.INVALID_PREFIX,
     message: getMessage(ErrorCodes.INVALID_PREFIX, {
-      validPrefixes: [
-        "05 (mobile)",
-        "02 (Abu Dhabi)",
-        "03 (Al Ain)",
-        "04 (Dubai)",
-        "06 (Sharjah)",
-        "07 (RAK)",
-        "09 (other)",
-      ],
+      validPrefixes: hasCountryCode
+        ? [
+            "5 (mobile)",
+            "2 (Abu Dhabi)",
+            "3 (Al Ain)",
+            "4 (Dubai)",
+            "6 (Sharjah)",
+            "7 (RAK)",
+            "9 (other)",
+          ]
+        : [
+            "05 (mobile)",
+            "02 (Abu Dhabi)",
+            "03 (Al Ain)",
+            "04 (Dubai)",
+            "06 (Sharjah)",
+            "07 (RAK)",
+            "09 (other)",
+          ],
       country: "UAE",
     }),
     details: {
-      validPrefixes: [
-        "05 (mobile)",
-        "02 (Abu Dhabi)",
-        "03 (Al Ain)",
-        "04 (Dubai)",
-        "06 (Sharjah)",
-        "07 (RAK)",
-        "09 (other)",
-      ],
+      validPrefixes: hasCountryCode
+        ? [
+            "5 (mobile)",
+            "2 (Abu Dhabi)",
+            "3 (Al Ain)",
+            "4 (Dubai)",
+            "6 (Sharjah)",
+            "7 (RAK)",
+            "9 (other)",
+          ]
+        : [
+            "05 (mobile)",
+            "02 (Abu Dhabi)",
+            "03 (Al Ain)",
+            "04 (Dubai)",
+            "06 (Sharjah)",
+            "07 (RAK)",
+            "09 (other)",
+          ],
       country: "UAE",
     },
   };

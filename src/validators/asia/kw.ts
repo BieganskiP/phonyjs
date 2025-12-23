@@ -31,10 +31,17 @@ export const validateKW: PhoneValidator = (phone: string): ValidationResult => {
   let digits = phone.replace(/\D/g, "");
 
   // Handle international formats
+  // Remove leading 0 if present after country code (some people incorrectly include it)
   if (digits.startsWith("00965") && digits.length >= 13) {
     digits = digits.slice(5);
+    if (digits.startsWith("0")) {
+      digits = digits.slice(1);
+    }
   } else if (digits.startsWith("965") && digits.length >= 11) {
     digits = digits.slice(3);
+    if (digits.startsWith("0")) {
+      digits = digits.slice(1);
+    }
   }
 
   // Check length
